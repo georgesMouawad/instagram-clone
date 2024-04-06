@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             FollowersTableSeeder::class,
             PostsTableSeeder::class,
+            LikesTableSeeder::class,
+            CommentsTableSeeder::class,
         ]);   
     }
 }
