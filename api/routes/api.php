@@ -3,6 +3,7 @@
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\LikesController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -26,3 +27,7 @@ Route::get('following', [FollowController::class, 'getFollowing']);
 
 Route::get('posts', [PostsController::class, 'getPosts']);
 Route::post('posts', [PostsController::class, 'addPost']);
+
+Route::post('like', [LikesController::class, 'likePost']);
+Route::post('unlike', [LikesController::class, 'unlikePost']);
+Route::get('likes', [LikesController::class, 'getLikes']);
