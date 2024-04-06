@@ -4,6 +4,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\LikesController;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
@@ -19,15 +20,17 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
-Route::get('users', [UsersController::class, 'getUsers']);
-Route::post('users', [UsersController::class, 'addUser']);
+Route::middleware([AuthMiddleware::class])->group(function () {
+    Route::get('users', [UsersController::class, 'getUsers']);
+    Route::post('users', [UsersController::class, 'addUser']);
 
-Route::get('followers', [FollowController::class, 'getFollowers']);
-Route::get('following', [FollowController::class, 'getFollowing']);
+    Route::get('followers', [FollowController::class, 'getFollowers']);
+    Route::get('following', [FollowController::class, 'getFollowing']);
 
-Route::get('posts', [PostsController::class, 'getPosts']);
-Route::post('posts', [PostsController::class, 'addPost']);
+    Route::get('posts', [PostsController::class, 'getPosts']);
+    Route::post('posts', [PostsController::class, 'addPost']);
 
-Route::post('like', [LikesController::class, 'likePost']);
-Route::post('unlike', [LikesController::class, 'unlikePost']);
-Route::get('likes', [LikesController::class, 'getLikes']);
+    Route::post('like', [LikesController::class, 'likePost']);
+    Route::post('unlike', [LikesController::class, 'unlikePost']);
+    Route::get('likes', [LikesController::class, 'getLikes']);
+});
