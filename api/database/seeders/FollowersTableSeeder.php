@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Follower;
 use Illuminate\Database\Seeder;
 
 class FollowersTableSeeder extends Seeder
@@ -12,6 +12,6 @@ class FollowersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Follower::factory()->count(10)->create();
     }
 }
