@@ -9,31 +9,28 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
-    public function getUser()
+    public function getUser(Request $request)
     {
-        if (!auth()->check()) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+        $user_id = $request->query('id');
+
+        if (!$user_id) {
+            $users = User::all();
+            return response()->json([
+                'users' => $users
+            ]);
         }
 
-        $user_id = auth()->user()->id;
         $user = User::find($user_id);
 
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+        if ($user) {
+            return response()->json([
+                'user' => $user
+            ]);
         }
 
         return response()->json([
-            'user' => $user
-        ]);
-    }
-
-    public function getUsers()
-    {
-        $users = User::all();
-
-        return response()->json([
-            'users' => $users
-        ]);
+            'message' => 'User not found'
+        ], 404);
     }
 
     public function updateUser(Request $request)
