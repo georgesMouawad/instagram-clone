@@ -34,7 +34,7 @@
 }
 
 form {
-  width: 90%;
+  width: 85%;
 }
 
 form > div {
@@ -54,9 +54,9 @@ form > div {
 }
 
 .field input {
-  padding: 0 24px;
-  margin-bottom: 24px;
-  margin-top: 4px;
+  padding: 0 12px;
+  margin-bottom: 4px;
+  margin-top: 8px;
   color: #6d6b6c;
 }
 
@@ -79,7 +79,6 @@ form > div {
 .login-btn,
 .register-btn {
   cursor: pointer;
-  font-size: 20px;
 }
 
 .login-btn:hover,
