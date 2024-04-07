@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
+
+import Popup from '../../Elements/Popup/Popup';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompass, faSquarePlus } from '@fortawesome/free-regular-svg-icons';
@@ -8,11 +10,15 @@ import { faHouse, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 const LeftBar = () => {
+    const [showPopup, setShowPopup] = useState(false);
+    const [image, setimage] = useState(null);
+    const [imageData, setimageData] = useState(null);
+
     const navigate = useNavigate();
 
     const handleLogout = async () => {
         try {
-            const response =  await sendRequest(requestMethods.POST, '/auth/logout', null);
+            const response = await sendRequest(requestMethods.POST, '/auth/logout', null);
             if (response.status === 200) {
                 localStorage.clear();
                 navigate('/auth');
@@ -23,38 +29,87 @@ const LeftBar = () => {
         }
     };
 
+    const handleImageUpload = (event) => {
+        const file = event.target.files[0];
+        setimageData(file);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            setimage(reader.result);
+        };
+    };
+
+    const ImageUploadPopup = ({ onUpload }) => {
+        const [image, setImage] = useState(null);
+        const [caption, setCaption] = useState('');
+
+        const handleImageChange = (event) => {
+            setImage(event.target.files[0]);
+        };
+
+        const handleCaptionChange = (event) => {
+            setCaption(event.target.value);
+        };
+
+        const handleSubmit = () => {
+            onUpload(image, caption);
+            setImage(null);
+            setCaption('');
+        };
+
+        return (
+            <div className="image-upload-popup">
+                <div className="popupmain-image">
+                    <input type="file" accept="image/*" name="image" onChange={handleImageChange} />
+                </div>
+                <div className="upload-caption">
+                    <input type="text" placeholder="Enter caption" value={caption} onChange={handleCaptionChange} />
+                </div>
+                <button onClick={handleSubmit}>Upload</button>
+            </div>
+        );
+    };
     return (
-        <div className="left-bar-main flex column">
-            <div className="left-bar-top">
-                <div className="left-bar-logo">
-                    <img src="./images/assets/ig-text-logo.png" alt="logo" />
+        <>
+            <div className="left-bar-main flex column">
+                <div className="left-bar-top">
+                    <div className="left-bar-logo">
+                        <img src="./images/assets/ig-text-logo.png" alt="logo" />
+                    </div>
+                    <div className="left-bar-links flex column">
+                        <div className="left-bar-home flex">
+                            <FontAwesomeIcon icon={faHouse} className="left-bar-icon" />
+                            <p>Home</p>
+                        </div>
+                        <div className="left-bar-explore flex">
+                            <FontAwesomeIcon icon={faCompass} className="left-bar-icon" />
+                            <p>Explore</p>
+                        </div>
+                        <div className="left-bar-create flex">
+                            <FontAwesomeIcon icon={faSquarePlus} className="left-bar-icon" />
+                            <p
+                                onClick={() => {
+                                    setShowPopup(true);
+                                }}
+                            >
+                                Create
+                            </p>
+                        </div>
+                        <div className="left-bar-profile flex">
+                            <img src="./images/assets/avatar.png" alt="avatar" />
+                            <p>Profile</p>
+                        </div>
+                    </div>
                 </div>
-                <div className="left-bar-links flex column">
-                    <div className="left-bar-home flex">
-                        <FontAwesomeIcon icon={faHouse} className="left-bar-icon" />
-                        <p>Home</p>
-                    </div>
-                    <div className="left-bar-explore flex">
-                        <FontAwesomeIcon icon={faCompass} className="left-bar-icon" />
-                        <p>Explore</p>
-                    </div>
-                    <div className="left-bar-create flex">
-                        <FontAwesomeIcon icon={faSquarePlus} className="left-bar-icon" />
-                        <p>Create</p>
-                    </div>
-                    <div className="left-bar-profile flex">
-                        <img src="./images/assets/avatar.png" alt="avatar" />
-                        <p>Profile</p>
+                <div className="left-bar-bottom left-bar-links">
+                    <div className="left-bar-logout flex align-center">
+                        <FontAwesomeIcon icon={faRightFromBracket} className="left-bar-icon" />
+                        <p onClick={handleLogout}>Logout</p>
                     </div>
                 </div>
             </div>
-            <div className="left-bar-bottom left-bar-links">
-                <div className="left-bar-logout flex align-center">
-                    <FontAwesomeIcon icon={faRightFromBracket} className="left-bar-icon" />
-                    <p onClick={handleLogout}>Logout</p>
-                </div>
-            </div>
-        </div>
+            {showPopup && <Popup action={handleImageUpload} image={true} />}
+        </>
     );
 };
 

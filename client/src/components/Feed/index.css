@@ -7,6 +7,10 @@
     margin-top: 32px;
 }
 
+.spacer {
+    width: 20%;
+}
+
 .post-container {
     width: 470px;
     height: auto;
@@ -73,6 +77,12 @@
 .left-bar-main {
     justify-content: space-between;
     padding-bottom: 36px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    z-index: 1000;
 }
 
 .left-bar-logo img {

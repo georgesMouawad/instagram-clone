@@ -34,6 +34,15 @@
   background-color: #f2f2f2;
 }
 
+.white-bg {
+  background-color: #ffffff;
+}
+
+.black-bg-trsp-s {
+  background-color: rgba(0, 0, 0, 0.1);
+
+}
+
 .no-bg {
   background-color: transparent;
 }

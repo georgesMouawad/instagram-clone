@@ -79,7 +79,7 @@ const Post = ({ post, currentUser }) => {
             <p className="size-m black-text bold">
                 {username} <span className="light-text regular">{content}</span>
             </p>
-            <FontAwesomeIcon icon={faXmark} />
+            {/* <FontAwesomeIcon icon={faXmark} /> */}
             </div>
         );
     };
