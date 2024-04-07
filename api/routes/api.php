@@ -15,7 +15,7 @@ Route::group([
 
 ], function ($router) {
 
-    Route::post('login', 'AuthController@login');
+    Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', 'AuthController@logout');
     Route::post('register', [AuthController::class, 'register']);
     Route::post('refresh', 'AuthController@refresh');
@@ -37,14 +37,15 @@ Route::group([
 //     Route::get('likes', [LikesController::class, 'getLikes']);
 // });
 
-Route::get('users', [UsersController::class, 'getUsers']);
-Route::post('users', [UsersController::class, 'addUser']);
+Route::get('users', [UsersController::class, 'getUser']);
+Route::post('users', [UsersController::class, 'updateUser']);
 
 Route::get('followers', [FollowController::class, 'getFollowers']);
 Route::get('following', [FollowController::class, 'getFollowing']);
 
 Route::get('posts', [PostsController::class, 'getPosts']);
 Route::post('posts', [PostsController::class, 'addPost']);
+Route::delete('posts', [PostsController::class, 'deletePost']);
 
 Route::post('like', [LikesController::class, 'likePost']);
 Route::post('unlike', [LikesController::class, 'unlikePost']);

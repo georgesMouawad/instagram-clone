@@ -57,5 +57,22 @@ class PostsController extends Controller
         ]);
     }
 
+    public function deletePost(Request $request)
+    {
+        $post_id = $request->query('id');
 
+        $post = Post::find($post_id);
+
+        if (!$post) {
+            return response()->json([
+                'message' => 'Post not found'
+            ], 404);
+        }
+
+        $post->delete();
+
+        return response()->json([
+            'message' => 'Post deleted successfully'
+        ]);
+    }
 }

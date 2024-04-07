@@ -9,15 +9,16 @@ class LikesController extends Controller
 {
     public function likePost(Request $request)
     {
-        $post_id = $request->post_id;
+        $post_id = $request->id;
         $user_id = auth()->user()->id;
 
         $like = Like::where('user_id', $user_id)->where('post_id', $post_id)->first();
 
         if ($like) {
+            $like->delete();
             return response()->json([
-                'message' => 'Post already liked'
-            ], 400);
+                'message' => 'Post unliked successfully'
+            ]);
         }
 
         $like = new Like();
@@ -27,26 +28,6 @@ class LikesController extends Controller
 
         return response()->json([
             'message' => 'Post liked successfully'
-        ]);
-    }
-
-    public function unlikePost(Request $request)
-    {
-        $post_id = $request->post_id;
-        $user_id = auth()->user()->id;
-
-        $like = Like::where('user_id', $user_id)->where('post_id', $post_id)->first();
-
-        if (!$like) {
-            return response()->json([
-                'message' => 'Post not liked'
-            ], 400);
-        }
-
-        $like->delete();
-
-        return response()->json([
-            'message' => 'Post unliked successfully'
         ]);
     }
 
