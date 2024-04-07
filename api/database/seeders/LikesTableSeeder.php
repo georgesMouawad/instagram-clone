@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Like;
+use Database\Factories\LikeFactory;
 use Illuminate\Database\Seeder;
 
 class LikesTableSeeder extends Seeder
@@ -12,6 +12,6 @@ class LikesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Like::factory()->count(10)->create();
+        LikeFactory::new()->count(10)->create();
     }
 }

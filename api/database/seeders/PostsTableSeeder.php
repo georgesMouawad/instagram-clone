@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Post;
+use Database\Factories\PostFactory;
 use Illuminate\Database\Seeder;
 
 class PostsTableSeeder extends Seeder
@@ -12,6 +12,6 @@ class PostsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        Post::factory()->count(10)->create();
+        PostFactory::new()->count(10)->create();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -12,6 +12,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        User::Factory()->count(10)->create();
+        UserFactory::new()->count(10)->create();
     }
 }
