@@ -37,14 +37,8 @@ export const useAuthenticationLogic = () => {
             const response = await sendRequest(requestMethods.POST, '/auth/login', data);
             if (response.status === 200) {
                 localStorage.setItem('token', JSON.stringify(response.data.token));
-                const getuser = await sendRequest(requestMethods.GET, '/users/get', null);
-                if (getuser.status === 200) {
-                    localStorage.setItem(
-                        'location',
-                        JSON.stringify([parseFloat(getuser.data.user.lat), parseFloat(getuser.data.user.lng)])
-                    );
-                }
-                navigate('/browse');
+                // const getuser = await sendRequest(requestMethods.GET, '/users/', null);
+                navigate('/');
                 return;
             } else {
                 throw new Error();
@@ -59,7 +53,7 @@ export const useAuthenticationLogic = () => {
             const response = await sendRequest(requestMethods.POST, '/auth/register', formData);
             if (response.status === 201) {
                 localStorage.setItem('token', JSON.stringify(response.data.token));
-                navigate('/location');
+                navigate('/');
                 return;
             } else {
                 throw new Error();

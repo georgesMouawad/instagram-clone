@@ -27,6 +27,10 @@
 }
 
 .light-gray-bg {
+  background-color: #f7f7f7;
+}
+
+.light-gray-bg:hover {
   background-color: #f2f2f2;
 }
 

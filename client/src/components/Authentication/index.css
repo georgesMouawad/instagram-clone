@@ -1,38 +1,19 @@
 .form-component {
   height: 100vh;
   width: 100%;
-}
-
-.location-form {
-  height: 720px;
-  width: 880px;
-  margin: 0 auto;
-}
-
-.location-form > .input-container {
-  width: 50%;
-}
-
-.map-container {
-  max-width: 50%;
-}
-
-.leaflet-container {
-  border-top-right-radius: 8px;
-  border-bottom-right-radius: 8px;
+  gap: 32px;
 }
 
 .logo-form img {
-  height: 40px;
+  height: 50px;
   margin: 48px;
 }
 
 .container {
   max-width: 30%;
   min-height: 600px;
-  min-width: 440px;
+  min-width: 400px;
   padding: 24px;
-  background-color: #f7f7f7;
 }
 
 .container p {
@@ -53,7 +34,7 @@
 }
 
 form {
-  width: 80%;
+  width: 90%;
 }
 
 form > div {
@@ -68,8 +49,11 @@ form > div {
   cursor: pointer;
 }
 
+.field {
+  width: 100%;
+}
+
 .field input {
-  font-size: 18px;
   padding: 0 24px;
   margin-bottom: 24px;
   margin-top: 4px;
@@ -93,13 +77,17 @@ form > div {
 }
 
 .login-btn,
-.register-btn,
-.location-btn {
+.register-btn {
   cursor: pointer;
   font-size: 20px;
 }
 
 .login-btn:hover,
+.register-btn:hover {
+  background-color: #980511;
+}
+
+/* .login-btn:hover,
 .register-btn:hover,
 .location-btn:hover {
   background-color: #980511;
@@ -109,4 +97,4 @@ form > div {
 .login-link:hover {
   color: #5c0206;
   cursor: pointer;
-}
+} */

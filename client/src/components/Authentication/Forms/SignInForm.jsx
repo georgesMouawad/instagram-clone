@@ -16,39 +16,37 @@ const SignInForm = ({ switchHandler, handleLogin, error, setFormData, formdata }
 
     return (
         <>
-            <form className="flex column" onSubmit={handleSubmit}>
+            <form className="flex column center" onSubmit={handleSubmit}>
                 <div className="field">
-                    <label className="light-text">Email</label>
                     <input
                         type="text"
                         name="email"
-                        placeholder="user@mail.com"
+                        placeholder="Phone number, email or username"
                         onChange={handleChange}
-                        className="off-white-bg input-btn-lg border-radius-l border"
+                        className="off-white-bg input-btn-lg light-gray-bg border size-m"
                         required
                     />
                 </div>
                 <div className="field">
-                    <label className="light-text">Password</label>
                     <input
                         type="password"
                         name="password"
-                        placeholder="password"
+                        placeholder="Password"
                         onChange={handleChange}
-                        className="off-white-bg input-btn-lg border-radius-l border"
+                        className="off-white-bg input-btn-lg light-gray-bg border size-m"
                         required
                     />
                 </div>
                 <div className="flex center validation-display">{error && <p>{error}</p>}</div>
                 <button
-                    className="login-btn input-btn-lg primary-bg white-text box-shadow border-radius-l"
+                    className="input-btn-lg primary-btn size-l box-shadow border-radius-m"
                     type="submit"
                 >
-                    Login
+                    Log in
                 </button>
             </form>
             <p>
-                No Account?{' '}
+                Don't have an account'?{' '}
                 <span className="register-link primary-text" onClick={() => switchHandler(false)}>
                     Register Now
                 </span>
