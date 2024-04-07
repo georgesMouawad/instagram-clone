@@ -9,6 +9,15 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+    public function getCurentUser()
+    {
+        $user = auth()->user();
+
+        return response()->json([
+            'user' => $user
+        ]);
+    }
+
     public function getUser(Request $request)
     {
         $user_id = $request->query('id');

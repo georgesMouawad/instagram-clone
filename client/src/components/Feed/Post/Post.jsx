@@ -11,6 +11,8 @@ import { faHeart as faHeartRegular, faComment as faCommentRegular } from '@forta
 const Post = ({ post }) => {
     const [liked, setLiked] = useState(false);
     const [comments, setComments] = useState([]);
+    const [userComment, setUserComment] = useState('');
+
     const { caption, username, image, created_at, likes } = post;
 
     useEffect(() => {
@@ -47,6 +49,19 @@ const Post = ({ post }) => {
             console.log(error);
         }
     };
+
+    const handleCommentSubmit = (e) => {
+        e.preventDefault();
+        if (userComment) {
+            setComments([...comments, { username: 'Username', content: userComment }]);
+            setUserComment('');
+        }
+
+    }
+
+    const handleCommentChange = (e) => {
+        setUserComment(e.target.value);
+    }
 
     const Comment = ({ username, content }) => {
         return (
@@ -97,8 +112,8 @@ const Post = ({ post }) => {
                             <Comment key={comment.id} username={comment.username} content={comment.content} />
                         ))}
                 </div>
-                <form className="post-add-comment">
-                    <input type="text" placeholder="Add a comment..." />
+                <form className="post-add-comment" onSubmit={handleCommentSubmit}>
+                    <input type="text" placeholder="Add a comment..." onChange={handleCommentChange} />
                 </form>
             </div>
         );

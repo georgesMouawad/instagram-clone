@@ -5,6 +5,9 @@ import Main from './Main/Main';
 import './index.css';
 
 const Feed = () => {
+    const getUsername = async () => {
+        return 'Username';
+    }
     return (
         <div className='feed-main flex'>
             <LeftBar />
