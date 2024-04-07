@@ -6,11 +6,11 @@ import './index.css';
 
 const Feed = () => {
     return (
-        <>
-            {/* <LeftBar /> */}
+        <div className='feed-main flex'>
+            <LeftBar />
             <Main />
-            {/* <RightBar /> */}
-        </>
+            <RightBar />
+        </div>
     );
 };
 
