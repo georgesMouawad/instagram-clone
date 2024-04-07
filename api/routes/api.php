@@ -35,6 +35,7 @@ Route::middleware([AuthMiddleware::class])->group(function () {
     Route::post('like', [LikesController::class, 'likePost']);
     Route::post('unlike', [LikesController::class, 'unlikePost']);
     Route::get('likes', [LikesController::class, 'getLikes']);
+    Route::get('like/check', [LikesController::class, 'checkLiked']);
 
     Route::get('comments', [CommentsController::class, 'getComments']);
     Route::post('comments', [CommentsController::class, 'addComment']);

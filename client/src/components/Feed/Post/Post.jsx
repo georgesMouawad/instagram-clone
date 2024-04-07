@@ -1,46 +1,62 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 import { timeAgo } from '../../../core/tools/formatTime';
+import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular, faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
 
 const Post = ({ post }) => {
-    const { id, caption, user_id, image, created_at } = post;
-
-    const [username, setUsername] = useState('');
-    const [likes, setLikes] = useState(0);
+    const [liked, setLiked] = useState(false);
+    const [comments, setComments] = useState([]);
+    const { caption, username, image, created_at, likes } = post;
 
     useEffect(() => {
-        
-        const getUsername = async () => {
+        const checkLiked = async () => {
             try {
-                const response = await sendRequest(requestMethods.GET, `/users?id=${user_id}`);
+                const response = await sendRequest(requestMethods.GET, `/like/check?id=${post.id}`);
                 if (response.status !== 200) throw new Error('Error');
-                setUsername(response.data.user.username);
+                setLiked(response.data.liked);
+            } catch (error) {}
+        };
+
+        const getComments = async () => {
+            try {
+                const response = await sendRequest(requestMethods.GET, `/comments?id=${post.id}`);
+                if (response.status !== 200) throw new Error('Error');
+                setComments(response.data.comments);
             } catch (error) {
                 console.error(error);
             }
         };
 
-        const getLikes = async () => {
-            try {
-                const response = await sendRequest(requestMethods.GET, `/likes?id=${id}`);
-                if (response.status !== 200) throw new Error('Error');
-                setLikes(response.data.likes.length);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+        checkLiked();
+        getComments();
+    }, [liked, post.id]);
 
-        getUsername();
-        getLikes();
-    }, []);
+    const handleLike = async () => {
+        setLiked(!liked);
+        liked ? post.likes-- : post.likes++;
+        try {
+            const response = await sendRequest(requestMethods.POST, '/like', { id: post.id });
+            if (response.status !== 200) throw new Error('Error');
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    if (post && username)
+    const Comment = ({ username, content }) => {
+        return (
+            <p className="size-m black-text bold">
+                {username} <span className="light-text regular">{content}</span>
+            </p>
+        );
+    };
+
+    if (post)
         return (
             <div className="post-container flex column center">
                 <div className="post-header flex center space-between">
@@ -53,15 +69,20 @@ const Post = ({ post }) => {
                     <FontAwesomeIcon icon={faEllipsis} />
                 </div>
                 <div className="post-image">
-                    <img src={'http://127.0.0.1:8000/posts/ ' + image} alt="post" />
+                    <img src={`http://127.0.0.1:8000/posts/${image}`} alt="post" />
                 </div>
                 <div className="post-actions flex size-xl dark-text">
-                    <FontAwesomeIcon icon={faHeartRegular} className="action" />
+                    <FontAwesomeIcon
+                        icon={liked ? faHeartSolid : faHeartRegular}
+                        className="action"
+                        onClick={handleLike}
+                    />
                     <FontAwesomeIcon icon={faCommentRegular} className="action" />
                 </div>
                 <div className="post-likes">
                     <p className="black-text size-m bold">
-                        999 <span>{likes}</span>
+                        {likes}
+                        <span> {likes <= 1 ? 'like' : 'likes'}</span>
                     </p>
                 </div>
                 <div className="post-caption">
@@ -70,16 +91,15 @@ const Post = ({ post }) => {
                     </p>
                 </div>
                 <div className="post-comments">
-                    <p className="size-m black-text bold">
-                        Username <span className="light-text regular">Comment</span>
-                    </p>
-                    <p className="size-m black-text bold">
-                        Username <span className="light-text regular">Comment</span>
-                    </p>
+                    {comments &&
+                        comments.length > 0 &&
+                        comments.map((comment) => (
+                            <Comment key={comment.id} username={comment.username} content={comment.content} />
+                        ))}
                 </div>
-                <div className="post-add-comment">
+                <form className="post-add-comment">
                     <input type="text" placeholder="Add a comment..." />
-                </div>
+                </form>
             </div>
         );
 };

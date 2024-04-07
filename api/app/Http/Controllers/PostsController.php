@@ -13,7 +13,19 @@ class PostsController extends Controller
 
         if (!$post_id) {
 
-            $posts = Post::all();
+            $posts = Post::with('user:id,username', 'likes')->get();
+
+            $posts = $posts->map(function ($post) {
+                return [
+                    'id' => $post->id,
+                    'image' => $post->image,
+                    'caption' => $post->caption,
+                    'created_at'=> $post->created_at,
+                    'username' => $post->user->username,
+                    'likes' => $post->likes->count(),
+                ];
+            });
+
             return response()->json([
                 'posts' => $posts
             ]);

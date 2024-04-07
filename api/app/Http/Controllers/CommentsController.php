@@ -23,6 +23,7 @@ class CommentsController extends Controller
         $comments = Comment::with('user:id,username')->where('post_id', $post_id)->get();
         $comments = $comments->map(function ($comment) {
             return [
+                'id' => $comment->id,
                 'content' => $comment->content,
                 'username' => $comment->user->username
             ];

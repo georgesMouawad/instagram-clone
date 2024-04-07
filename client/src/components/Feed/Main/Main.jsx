@@ -23,8 +23,8 @@ const Main = () => {
 
     return (
         <div className="feed-mid-container flex column">
-            {posts.map((post) => (
-                <Post key={post._id} post={post} />
+            {posts && posts.length > 0 && posts.map((post) => (
+                <Post key={post.id} post={post} />
             ))}
         </div>
     );
