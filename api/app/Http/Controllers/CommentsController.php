@@ -54,7 +54,9 @@ class CommentsController extends Controller
         $comment->save();
 
         return response()->json([
-            'message' => 'Comment added'
+            'id' => $comment->id,
+            'content' => $comment->content,
+            'username' => $comment->user->username
         ]);
     }
 }

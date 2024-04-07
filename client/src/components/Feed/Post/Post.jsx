@@ -5,7 +5,7 @@ import { timeAgo } from '../../../core/tools/formatTime';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faHeart as faHeartSolid, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular, faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
 
 const Post = ({ post, currentUser }) => {
@@ -60,8 +60,7 @@ const Post = ({ post, currentUser }) => {
                 });
                 if (response.status !== 200) throw new Error('Error');
 
-                // Update the comments state with the new comment from the server response
-                setComments([...comments, response.data.comment]);
+                setComments([...comments, response.data]);
                 setUserComment('');
             } catch (error) {
                 console.log(error);
@@ -75,9 +74,13 @@ const Post = ({ post, currentUser }) => {
 
     const Comment = ({ username, content }) => {
         return (
+            <div className="flex space-between">
+
             <p className="size-m black-text bold">
                 {username} <span className="light-text regular">{content}</span>
             </p>
+            <FontAwesomeIcon icon={faXmark} />
+            </div>
         );
     };
 
@@ -123,7 +126,7 @@ const Post = ({ post, currentUser }) => {
                         ))}
                 </div>
                 <form className="post-add-comment" onSubmit={handleCommentSubmit}>
-                    <input type="text" placeholder="Add a comment..." onChange={handleCommentChange} />
+                    <input type="text" value={userComment} placeholder="Add a comment..." onChange={handleCommentChange} />
                 </form>
             </div>
         );
