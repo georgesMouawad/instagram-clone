@@ -2,6 +2,11 @@
     min-height: 100vh;
     justify-content: space-between;
 }
+
+.feed-mid-container {
+    margin-top: 32px;
+}
+
 .post-container {
     width: 470px;
     height: auto;
@@ -53,11 +58,21 @@
     outline: none;
 }
 
-.left-bar-main, .right-bar-main {
+.left-bar-main,
+.right-bar-main {
     width: 20%;
     gap: 24px;
     padding-left: 24px;
     border-right: #dbdbdb 1px solid;
+}
+
+.right-bar-main{
+    width: 25%;
+}
+
+.left-bar-main {
+    justify-content: space-between;
+    padding-bottom: 36px;
 }
 
 .left-bar-logo img {
@@ -69,7 +84,12 @@
     gap: 36px;
 }
 
-.left-bar-links > div {
+.left-bar-links > div > p:hover {
+    cursor: pointer;
+    color: #737373;
+}
+
+.left-bar-links>div {
     align-items: center;
     gap: 16px;
 }
@@ -82,4 +102,42 @@
 .left-bar-profile img {
     width: 25px;
     border-radius: 50%;
+}
+
+.right-bar-main {
+    padding: 0;
+}
+
+.right-bar-profile {
+    margin: 36px 0;
+}
+
+
+.right-bar-main img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.right-bar-main > p {
+    padding-bottom: 12px;
+}
+
+.right-bar-suggested {
+    padding-right: 24px;
+}
+
+.right-bar-main>div,
+.right-bar-main>div>div {
+    gap: 12px;
+}
+
+.suggested-card {
+    width: 100%;
+    padding: 8px 0;
+}
+
+.follow-button:hover {
+    cursor: pointer;
+    color: #00376b;
 }
