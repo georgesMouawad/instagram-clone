@@ -16,7 +16,8 @@ const Feed = ({ currentUser }) => {
             const response = await sendRequest(requestMethods.GET, '/posts');
             if (response.status !== 200) throw new Error('Error');
             console.log(response.data.posts);
-            setPosts(response.data.posts);
+
+            setPosts(response.data.posts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)));
         } catch (error) {
             console.error(error);
         }
