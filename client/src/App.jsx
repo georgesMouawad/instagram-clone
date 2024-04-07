@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Authentication from './components/Authentication/Authentication';
+import Feed from './components/Feed/Feed';
 
 import './styles/colors.css'
 import './styles/utilities.css'
@@ -12,6 +13,7 @@ function App() {
 
     <Routes>
       <Route path="/auth" element={<Authentication />} />
+      <Route path="/" element={<Feed />} />
     </Routes>
 
   );

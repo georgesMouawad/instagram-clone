@@ -1,0 +1,50 @@
+.post-container {
+    width: 470px;
+    height: auto;
+    border-bottom: #dbdbdb 1px solid;
+    padding: 8px 0;
+}
+
+.post-header {
+    width: 100%;
+    padding-bottom: 16px;
+}
+
+.post-header-left img {
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+}
+
+.post-actions {
+    width: 100%;
+    padding: 8px;
+    gap: 12px;
+}
+
+.action:hover {
+    cursor: pointer;
+    color: #dbdbdb;
+}
+
+.post-add-comment,
+.post-comments,
+.post-likes,
+.post-caption {
+    width: 100%;
+    padding: 4px;
+}
+
+.post-add-comment input {
+    border: none;
+    width: 100%;
+}
+
+.post-add-comment input:focus {
+    outline: none;
+}
