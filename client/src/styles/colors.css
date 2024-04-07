@@ -1,81 +1,37 @@
 .primary-text {
-  color: #ce091b;
+  color: #0095f6;
+}
+
+.secondary-text {
+  color: #dbdbdb;
 }
 
 .black-text {
   color: #161213;
 }
 
-.dark-text {
-  color: #30302f;
-}
-
 .light-text {
-  color: #6d6b6c;
+  color: #737373;
 }
 
-.secondary-text {
-  color: #ed941b;
-}
-
-.gray-bg {
-  background-color: #404040;
-}
-
-.light-gray-bg {
-  background-color: #f7f7f7;
-}
-
-.white-bg {
-  background-color: #ffffff;
-}
-
-.white-text {
-  color: #ffffff;
-}
-
-.off-white-text {
-  color: #dee2e6;
-}
-
-.off-white-bg {
-  color: #dee2e6;
-}
-
-.onclick-nav-bg {
-  background-color: #adb5bd;
+.lightest-text {
+  color: #c7c7c7;
 }
 
 .primary-bg {
-  background-color: #ce091b;
+  background-color: #4cb5f9;
 }
 
 .secondary-bg {
-  background-color: #ed941b;
+  background-color: #dbdbdb;
 }
 
-.black-bg {
-  background-color: #161213;
-}
-
-.black-bg-trsp-s {
-  background-color: #16121395;
-}
-
-.black-bg-trsp {
-  background-color: #16121350;
-}
-
-.off-white-bg-trsp {
-  background-color: #dee2e650;
-}
-
-.light-gray-bg-trsp {
-  background-color: #6d6b6c50;
+.light-gray-bg {
+  background-color: #f2f2f2;
 }
 
 .no-bg {
   background-color: transparent;
 }
 
-/* Hover Color Button: #980511 Link Hover: #5C0206 */
+/* Hover Color Button: #00376b Link Hover: #00376b */
