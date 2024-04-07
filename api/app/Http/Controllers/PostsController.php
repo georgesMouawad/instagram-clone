@@ -20,7 +20,7 @@ class PostsController extends Controller
                     'id' => $post->id,
                     'image' => $post->image,
                     'caption' => $post->caption,
-                    'created_at'=> $post->created_at,
+                    'created_at' => $post->created_at,
                     'username' => $post->user->username,
                     'likes' => $post->likes->count(),
                 ];
@@ -58,15 +58,22 @@ class PostsController extends Controller
         $image->move(public_path('/posts/'), $image_name);
 
         $post = new Post();
-        $post->user_id = $user_id;
         $post->image = $image_name;
+        $post->user_id = $user_id;
         $post->caption = $request->caption;
         $post->save();
 
         return response()->json([
             'message' => 'Post created successfully',
-            'post' => $post
-        ]);
+            'post' => [
+                'id' => $post->id,
+                'image' => $post->image,
+                'caption' => $post->caption,
+                'created_at' => $post->created_at,
+                'username' => auth()->user()->username,
+                'likes' => 0
+            ]
+        ], 201);
     }
 
     public function deletePost(Request $request)

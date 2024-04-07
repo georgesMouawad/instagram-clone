@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as faHeartSolid, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular, faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
 
-const Post = ({ post, currentUser }) => {
+const Post = ({ post }) => {
     const [liked, setLiked] = useState(false);
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState('');

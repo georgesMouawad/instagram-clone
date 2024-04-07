@@ -3,7 +3,7 @@ import React from 'react';
 import './index.css';
 import Button from '../Button/Button';
 
-const Popup = ({ message, handleContinue, imageAction = null, captionAction = null , setCaption}) => {
+const Popup = ({ message, handleContinue, imageAction = null, captionAction = null, setCaption }) => {
     return (
         <div className="popupmain flex column center black-bg-trsp-s">
             <div className="popupmain-inner white-bg flex column space-evenly box-shadow border-radius">
@@ -29,9 +29,8 @@ const Popup = ({ message, handleContinue, imageAction = null, captionAction = nu
                         </div>
                     </div>
                 )}
-                {!imageAction && (
-                    <Button text={'Continue'} type={'primary-btn'} size={'btn-l'} clickHandler={handleContinue} />
-                )}
+
+                <Button text={'Continue'} type={'primary-btn'} size={'btn-l'} clickHandler={handleContinue} />
             </div>
         </div>
     );

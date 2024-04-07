@@ -9,10 +9,10 @@ import { faCompass, faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { faHouse, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
-const LeftBar = () => {
+const LeftBar = ({ posts, setPosts }) => {
     const [showPopup, setShowPopup] = useState(false);
-    const [image, setimage] = useState(null);
-    const [imageData, setimageData] = useState(null);
+    const [image, setImage] = useState(null);
+    const [imageData, setImageData] = useState(null);
     const [caption, setCaption] = useState('');
 
     const navigate = useNavigate();
@@ -30,18 +30,37 @@ const LeftBar = () => {
         }
     };
 
-    const handleImageUpload = (event) => {
+    const handleImageSelect = (event) => {
         const file = event.target.files[0];
-        setimageData(file);
+        setImageData(file);
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            setimage(reader.result);
+            setImage(reader.result);
         };
     };
 
     const handleCaptionChange = (event) => {
         setCaption(event.target.value);
+    };
+
+    const handleImageUpload = async () => {
+        const data = new FormData();
+        data.append('image', imageData);
+        data.append('caption', caption);
+
+        try {
+            const response = await sendRequest(requestMethods.POST, '/posts', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            if (response.status !== 201) throw new Error('Error');
+            setShowPopup(false);
+            setPosts([response.data.post, ...posts]);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -83,7 +102,14 @@ const LeftBar = () => {
                     </div>
                 </div>
             </div>
-            {showPopup && <Popup imageAction={handleImageUpload} captionAction={handleCaptionChange} caption={caption}/>}
+            {showPopup && (
+                <Popup
+                    handleContinue={handleImageUpload}
+                    imageAction={handleImageSelect}
+                    captionAction={handleCaptionChange}
+                    caption={caption}
+                />
+            )}
         </>
     );
 };
