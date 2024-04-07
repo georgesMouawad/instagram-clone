@@ -13,6 +13,7 @@ const LeftBar = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [image, setimage] = useState(null);
     const [imageData, setimageData] = useState(null);
+    const [caption, setCaption] = useState('');
 
     const navigate = useNavigate();
 
@@ -39,36 +40,10 @@ const LeftBar = () => {
         };
     };
 
-    const ImageUploadPopup = ({ onUpload }) => {
-        const [image, setImage] = useState(null);
-        const [caption, setCaption] = useState('');
-
-        const handleImageChange = (event) => {
-            setImage(event.target.files[0]);
-        };
-
-        const handleCaptionChange = (event) => {
-            setCaption(event.target.value);
-        };
-
-        const handleSubmit = () => {
-            onUpload(image, caption);
-            setImage(null);
-            setCaption('');
-        };
-
-        return (
-            <div className="image-upload-popup">
-                <div className="popupmain-image">
-                    <input type="file" accept="image/*" name="image" onChange={handleImageChange} />
-                </div>
-                <div className="upload-caption">
-                    <input type="text" placeholder="Enter caption" value={caption} onChange={handleCaptionChange} />
-                </div>
-                <button onClick={handleSubmit}>Upload</button>
-            </div>
-        );
+    const handleCaptionChange = (event) => {
+        setCaption(event.target.value);
     };
+
     return (
         <>
             <div className="left-bar-main flex column">
@@ -108,7 +83,7 @@ const LeftBar = () => {
                     </div>
                 </div>
             </div>
-            {showPopup && <Popup action={handleImageUpload} image={true} />}
+            {showPopup && <Popup imageAction={handleImageUpload} captionAction={handleCaptionChange} caption={caption}/>}
         </>
     );
 };
