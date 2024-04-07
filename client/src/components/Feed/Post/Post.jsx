@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular, faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
 
-const Post = ({ post }) => {
+const Post = ({ post, currentUser }) => {
     const [liked, setLiked] = useState(false);
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState('');
@@ -36,7 +36,7 @@ const Post = ({ post }) => {
 
         checkLiked();
         getComments();
-    }, [liked, post.id]);
+    }, []);
 
     const handleLike = async () => {
         setLiked(!liked);
@@ -50,18 +50,28 @@ const Post = ({ post }) => {
         }
     };
 
-    const handleCommentSubmit = (e) => {
+    const handleCommentSubmit = async (e) => {
         e.preventDefault();
         if (userComment) {
-            setComments([...comments, { username: 'Username', content: userComment }]);
-            setUserComment('');
-        }
+            try {
+                const response = await sendRequest(requestMethods.POST, '/comments', {
+                    post_id: post.id,
+                    content: userComment,
+                });
+                if (response.status !== 200) throw new Error('Error');
 
-    }
+                // Update the comments state with the new comment from the server response
+                setComments([...comments, response.data.comment]);
+                setUserComment('');
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
 
     const handleCommentChange = (e) => {
         setUserComment(e.target.value);
-    }
+    };
 
     const Comment = ({ username, content }) => {
         return (

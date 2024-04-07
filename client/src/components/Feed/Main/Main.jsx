@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Post from '../Post/Post';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
-const Main = () => {
+const Main = (currentUser) => {
     const [posts, setPosts] = useState([]);
 
     const getPosts = async () => {
@@ -23,9 +23,9 @@ const Main = () => {
 
     return (
         <div className="feed-mid-container flex column">
-            {posts && posts.length > 0 && posts.map((post) => (
-                <Post key={post.id} post={post} />
-            ))}
+            {posts &&
+                posts.length > 0 &&
+                posts.map((post) => <Post key={post.id} post={post} currentUser={currentUser} />)}
         </div>
     );
 };

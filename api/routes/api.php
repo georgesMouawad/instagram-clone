@@ -22,7 +22,7 @@ Route::group([
 });
 
 Route::middleware([AuthMiddleware::class])->group(function () {
-    Route::post('user', [UsersController::class, 'getCurrentUser']);
+    Route::get('user', [UsersController::class, 'getCurrentUser']);
     Route::get('users', [UsersController::class, 'getUser']);
     Route::post('users', [UsersController::class, 'updateUser']);
 

@@ -9,7 +9,7 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
-    public function getCurentUser()
+    public function getCurrentUser()
     {
         $user = auth()->user();
 
