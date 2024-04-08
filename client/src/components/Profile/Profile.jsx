@@ -53,13 +53,13 @@ const Profile = ({ currentUser }) => {
         getUserPosts();
         getUserInfo();
         if (!isCurrentUserProfile) checkIfFollowed();
-    }, [isEditing, isFollowed]);
+    }, [isEditing]);
 
-    const handleUserFollow = () => {
+    const handleUserFollow = async () => {
         try {
-            const response = sendRequest(requestMethods.POST, `/follow`, { id: userInfo.id });
-            if (response.status !== 200) throw new Error('Error');
             setIsFollowed(!isFollowed);
+            const response = await sendRequest(requestMethods.POST, `/follow`, { id: userInfo.id });
+            if (response.status !== 200) throw new Error('Error');
         } catch (error) {
             console.log(error);
         }
