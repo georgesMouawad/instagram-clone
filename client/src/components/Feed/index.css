@@ -15,7 +15,7 @@
     width: 470px;
     height: auto;
     border-bottom: #dbdbdb 1px solid;
-    padding: 8px 0;
+    padding: 16px 0;
 }
 
 .post-header {
@@ -24,8 +24,10 @@
 }
 
 .post-header-left img {
-    width: 30px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
+    object-fit: cover;
     margin-right: 10px;
 }
 
@@ -38,6 +40,12 @@
     width: 100%;
     padding: 8px;
     gap: 12px;
+}
+
+.post-username:hover {
+    cursor: pointer;
+    color: #737373;
+
 }
 
 .action:hover {
@@ -129,6 +137,7 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .right-bar-main>p {

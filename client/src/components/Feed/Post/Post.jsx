@@ -99,7 +99,7 @@ const Post = ({ post }) => {
                             }
                             alt="avatar"
                         />
-                        <p className="size-m black-text" onClick={navigate(`/profile?id=${user_id}`)}>
+                        <p className="post-username bold size-m black-text" onClick={() => navigate(`/profile?id=${user_id}`)}>
                             {username} <span className="light-text"> {timeAgo(created_at)}</span>
                         </p>
                     </div>

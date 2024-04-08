@@ -24,7 +24,7 @@ class PostsController extends Controller
                     'created_at' => $post->created_at,
                     'user_id' => $post->user_id,
                     'username' => $post->user->username,
-                    'user_img' => $post->user->image,
+                    'user_image' => $post->user->image,
                     'likes' => $post->likes->count(),
                 ];
             });
