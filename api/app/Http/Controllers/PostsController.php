@@ -14,7 +14,7 @@ class PostsController extends Controller
 
         if (!$post_id && !$user_id) {
 
-            $posts = Post::with('user:id,username', 'likes')->get();
+            $posts = Post::with('user:id,username,image', 'likes')->get();
 
             $posts = $posts->map(function ($post) {
                 return [
@@ -22,7 +22,9 @@ class PostsController extends Controller
                     'image' => $post->image,
                     'caption' => $post->caption,
                     'created_at' => $post->created_at,
+                    'user_id' => $post->user_id,
                     'username' => $post->user->username,
+                    'user_img' => $post->user->image,
                     'likes' => $post->likes->count(),
                 ];
             });

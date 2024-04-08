@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { timeAgo } from '../../../core/tools/formatTime';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
@@ -9,14 +10,14 @@ import { faEllipsis, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg
 import { faHeart as faHeartRegular, faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
 
 const Post = ({ post }) => {
-    const [liked, setLiked] = useState(false);
-    const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState('');
+    const [comments, setComments] = useState([]);
+    const [liked, setLiked] = useState(false);
+    const navigate = useNavigate();
 
-    const { caption, username, image, created_at, likes } = post;
+    const { caption, username, image, created_at, likes, user_image, user_id } = post;
 
     useEffect(() => {
-        
         const checkLiked = async () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/like/check?id=${post.id}`);
@@ -90,8 +91,15 @@ const Post = ({ post }) => {
             <div className="post-container flex column center">
                 <div className="post-header flex center space-between">
                     <div className="post-header-left flex center">
-                        <img src="./images/assets/avatar.png" alt="avatar" />
-                        <p className="size-m black-text">
+                        <img
+                            src={
+                                user_image
+                                    ? `http://127.0.0.1:8000/profile-pictures/${user_image}`
+                                    : './images/assets/avatar.png'
+                            }
+                            alt="avatar"
+                        />
+                        <p className="size-m black-text" onClick={navigate(`/profile?id=${user_id}`)}>
                             {username} <span className="light-text"> {timeAgo(created_at)}</span>
                         </p>
                     </div>

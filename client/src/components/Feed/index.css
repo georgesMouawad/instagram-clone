@@ -70,7 +70,7 @@
     border-right: #dbdbdb 1px solid;
 }
 
-.right-bar-main{
+.right-bar-main {
     width: 25%;
 }
 
@@ -94,7 +94,7 @@
     gap: 36px;
 }
 
-.left-bar-links > div > p:hover {
+.left-bar-links>div>p:hover {
     cursor: pointer;
     color: #737373;
 }
@@ -131,8 +131,13 @@
     border-radius: 50%;
 }
 
-.right-bar-main > p {
+.right-bar-main>p {
     padding-bottom: 12px;
+}
+
+.right-bar-main>div>p:hover {
+    cursor: pointer;
+    color: #737373;
 }
 
 .right-bar-suggested {
@@ -153,5 +158,3 @@
     cursor: pointer;
     color: #00376b;
 }
-
-
