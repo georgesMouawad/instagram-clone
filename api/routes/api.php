@@ -28,6 +28,9 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 
     Route::get('followers', [FollowController::class, 'getFollowers']);
     Route::get('following', [FollowController::class, 'getFollowing']);
+    Route::post('follow', [FollowController::class, 'followUser']);
+    Route::get('follow/check', [FollowController::class, 'checkFollow']);
+
 
     Route::get('posts', [PostsController::class, 'getPosts']);
     Route::post('posts', [PostsController::class, 'addPost']);

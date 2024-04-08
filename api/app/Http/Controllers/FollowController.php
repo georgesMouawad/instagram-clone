@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Follower;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -59,5 +60,60 @@ class FollowController extends Controller
         ]);
     }
 
+    public function followUser(Request $request)
+    {
+        $user_id = $request->input('id');
+        $follower_id = auth()->user()->id;
+
+        $user = User::find($user_id);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $is_following = Follower::where('user_id', $user_id)
+            ->where('follower_id', $follower_id)
+            ->first();
+
+
+        if ($is_following) {
+            $is_following->delete();
+            return response()->json([
+                'message' => 'User unfollowed'
+            ]);
+        }
+
+
+        $follower = new Follower();
+        $follower->user_id = $user_id;
+        $follower->follower_id = $follower_id;
+        $follower->save();
+
+        return response()->json([
+            'message' => 'User followed'
+        ]);
+    }
+
+    public function checkFollow(Request $request)
+    {
+        $user_id = $request->query('id');
+        $follower_id = auth()->user()->id;
+
+        $is_following = Follower::where('user_id', $user_id)
+            ->where('follower_id', $follower_id)
+            ->first();
+
+        if ($is_following) {
+            return response()->json([
+                'following' => true
+            ]);
+        }
+
+        return response()->json([
+            'following' => false
+        ]);
+    }
 
 }
