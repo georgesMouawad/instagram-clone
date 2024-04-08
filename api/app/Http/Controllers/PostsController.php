@@ -10,10 +10,29 @@ class PostsController extends Controller
     public function getPosts(Request $request)
     {
         $post_id = $request->query('id');
+        $user_id = $request->query('user_id');
 
-        if (!$post_id) {
+        if (!$post_id && !$user_id) {
 
             $posts = Post::with('user:id,username', 'likes')->get();
+
+            $posts = $posts->map(function ($post) {
+                return [
+                    'id' => $post->id,
+                    'image' => $post->image,
+                    'caption' => $post->caption,
+                    'created_at' => $post->created_at,
+                    'username' => $post->user->username,
+                    'likes' => $post->likes->count(),
+                ];
+            });
+
+            return response()->json([
+                'posts' => $posts
+            ]);
+        } elseif ($user_id) {
+
+            $posts = Post::where('user_id', $user_id)->with('user:id,username', 'likes')->get();
 
             $posts = $posts->map(function ($post) {
                 return [

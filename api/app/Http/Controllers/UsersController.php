@@ -31,9 +31,23 @@ class UsersController extends Controller
 
         $user = User::find($user_id);
 
+
         if ($user) {
+
+            $userData = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'username' => $user->username,
+                'bio' => $user->bio,
+                'email' => $user->email,
+                'image' => $user->image,
+                'posts' => $user->posts()->count(),
+                'followers' => $user->followers()->count(),
+                'following' => $user->following()->count(),
+            ];
+
             return response()->json([
-                'user' => $user
+                'user' => $userData
             ]);
         }
 
@@ -47,7 +61,8 @@ class UsersController extends Controller
         $request->validate([
             'name' => 'string',
             'bio' => 'string',
-            'email' => 'string|email',
+            'username' => 'string|unique:users,username,' . auth()->id(),
+            'email' => 'string|email|unique:users,email,' . auth()->id(),
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -66,10 +81,10 @@ class UsersController extends Controller
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move(public_path('/profile-pictues/'), $filename);
+            $file->move(public_path('/profile-pictures/'), $filename);
 
-            if (File::exists(public_path('/profile-pictues/') . $user->image)) {
-                File::delete(public_path('/profile-pictues/') . $user->image);
+            if (File::exists(public_path('/profile-pictures/') . $user->image)) {
+                File::delete(public_path('/profile-pictures/') . $user->image);
             }
 
             $user->image = $filename;
@@ -78,6 +93,7 @@ class UsersController extends Controller
         $request->name && $user->name = $request->name;
         $request->bio && $user->bio = $request->bio;
         $request->email && $user->email = $request->email;
+        $request->username && $user->username = $request->username;
 
         $user->save();
 

@@ -90,10 +90,21 @@ const LeftBar = ({ posts, setPosts, currentUser }) => {
                             </p>
                         </div>
                         <div className="left-bar-profile flex">
-                            <img src="./images/assets/avatar.png" alt="avatar" />
-                            <p onClick={() => {
-                                navigate(`/profile?id=${currentUser.id}`);
-                            }}>Profile</p>
+                            <img
+                                src={
+                                    currentUser.image
+                                        ? `http://127.0.0.1:8000/profile-pictures/${currentUser.image}`
+                                        : './images/assets/avatar.png'
+                                }
+                                alt="avatar"
+                            />
+                            <p
+                                onClick={() => {
+                                    navigate(`/profile?id=${currentUser.id}`);
+                                }}
+                            >
+                                Profile
+                            </p>
                         </div>
                     </div>
                 </div>

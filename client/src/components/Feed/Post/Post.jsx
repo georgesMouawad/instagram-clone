@@ -5,7 +5,7 @@ import { timeAgo } from '../../../core/tools/formatTime';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsis, faHeart as faHeartSolid, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsis, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular, faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
 
 const Post = ({ post }) => {
@@ -16,6 +16,7 @@ const Post = ({ post }) => {
     const { caption, username, image, created_at, likes } = post;
 
     useEffect(() => {
+        
         const checkLiked = async () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/like/check?id=${post.id}`);
@@ -36,6 +37,7 @@ const Post = ({ post }) => {
 
         checkLiked();
         getComments();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleLike = async () => {
