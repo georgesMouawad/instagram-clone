@@ -2,6 +2,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import Authentication from './components/Authentication/Authentication';
+import Profile from './components/Profile/Profile';
 import Feed from './components/Feed/Feed';
 
 import { requestMethods, sendRequest } from './core/tools/apiRequest';
@@ -35,8 +36,9 @@ const App = () => {
 
     return (
         <Routes>
-            <Route path="/auth" element={<Authentication />} />
             <Route path="/" element={<Feed currentUser={currentUser} />} />
+            <Route path="/auth" element={<Authentication />} />
+            <Route path="/profile" element={<Profile currentUser={currentUser} />} />
         </Routes>
     );
 };

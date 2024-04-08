@@ -9,7 +9,7 @@ import { faCompass, faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { faHouse, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
-const LeftBar = ({ posts, setPosts }) => {
+const LeftBar = ({ posts, setPosts, currentUser }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [image, setImage] = useState(null);
     const [imageData, setImageData] = useState(null);
@@ -91,7 +91,9 @@ const LeftBar = ({ posts, setPosts }) => {
                         </div>
                         <div className="left-bar-profile flex">
                             <img src="./images/assets/avatar.png" alt="avatar" />
-                            <p>Profile</p>
+                            <p onClick={() => {
+                                navigate(`/profile?id=${currentUser.id}`);
+                            }}>Profile</p>
                         </div>
                     </div>
                 </div>

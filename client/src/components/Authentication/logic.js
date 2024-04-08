@@ -44,6 +44,7 @@ export const useAuthenticationLogic = () => {
             }
         } catch (error) {
             setError('Wrong email or password');
+            console.log(error.response.data)
         }
     };
 

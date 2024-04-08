@@ -75,11 +75,10 @@ const Post = ({ post }) => {
     const Comment = ({ username, content }) => {
         return (
             <div className="flex space-between">
-
-            <p className="size-m black-text bold">
-                {username} <span className="light-text regular">{content}</span>
-            </p>
-            {/* <FontAwesomeIcon icon={faXmark} /> */}
+                <p className="size-m black-text bold">
+                    {username} <span className="light-text regular">{content}</span>
+                </p>
+                {/* <FontAwesomeIcon icon={faXmark} /> */}
             </div>
         );
     };
@@ -126,7 +125,12 @@ const Post = ({ post }) => {
                         ))}
                 </div>
                 <form className="post-add-comment" onSubmit={handleCommentSubmit}>
-                    <input type="text" value={userComment} placeholder="Add a comment..." onChange={handleCommentChange} />
+                    <input
+                        type="text"
+                        value={userComment}
+                        placeholder="Add a comment..."
+                        onChange={handleCommentChange}
+                    />
                 </form>
             </div>
         );
