@@ -13,6 +13,7 @@ import EditProfileForm from '../Elements/EditProfileForm/EditProfileForm';
 
 const Profile = ({ currentUser }) => {
     const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false);
+    const [isFollowed, setIsFollowed] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const [userPosts, setUserPosts] = useState([]);
@@ -38,13 +39,30 @@ const Profile = ({ currentUser }) => {
                 console.log(error);
             }
         };
+        const checkIfFollowed = async () => {
+            try {
+                const response = await sendRequest(requestMethods.GET, `/follow/check?id=${searchParams.get('id')}`);
+                if (response.status !== 200) throw new Error('Error');
+                console.log(response.data.following);
+                setIsFollowed(response.data.following);
+            } catch (error) {
+                console.log(error);
+            }
+        };
         setIsCurrentUserProfile(currentUser.id === parseInt(searchParams.get('id')));
         getUserPosts();
         getUserInfo();
-    }, [searchParams, currentUser.id, isEditing]);
+        if (!isCurrentUserProfile) checkIfFollowed();
+    }, [isEditing, isFollowed]);
 
     const handleUserFollow = () => {
-        console.log('Follow User');
+        try {
+            const response = sendRequest(requestMethods.POST, `/follow`, { id: userInfo.id });
+            if (response.status !== 200) throw new Error('Error');
+            setIsFollowed(!isFollowed);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const ProfilePost = ({ image }) => {
@@ -83,10 +101,10 @@ const Profile = ({ currentUser }) => {
                                 />
                             ) : (
                                 <Button
-                                    type={'primary-btn'}
+                                    type={isFollowed ? 'secondary-btn' : 'primary-btn'}
                                     size={'btn-s'}
                                     clickHandler={handleUserFollow}
-                                    text={'Follow'}
+                                    text={isFollowed ? 'Following' : 'Follow'}
                                 />
                             )}
                         </div>
@@ -118,7 +136,7 @@ const Profile = ({ currentUser }) => {
                         userPosts.map((post) => <ProfilePost image={post.image} key={post.id} />)}
                 </div>
             </div>
-            {isEditing && <EditProfileForm userInfo={userInfo} setIsEditing={setIsEditing}/>}
+            {isEditing && <EditProfileForm userInfo={userInfo} setIsEditing={setIsEditing} />}
         </>
     );
 };
