@@ -121,23 +121,21 @@ class FollowController extends Controller
         $user_auth = auth()->user();
 
         $user = User::find($user_auth->id);
-        
+
         $following = $user->following()->pluck('users.id');
 
         $firstLevelFollowers = Follower::whereIn('follower_id', $following)->where('user_id', '!=', $user_auth->id)->pluck('user_id');
 
         $secondLevelFollowers = Follower::whereIn('follower_id', $firstLevelFollowers)->pluck('user_id');
 
-        $recommendations = $following->merge($secondLevelFollowers)->unique();
-
-        $recommendations = $recommendations->reject(function ($userId) use ($user) {
+        $recommendations = $secondLevelFollowers->reject(function ($userId) use ($user) {
             return $userId === $user->id;
         });
 
         $recommendedUsers = User::whereIn('id', $recommendations)->get();
 
         return response()->json([
-            'recommendations' => $recommendedUsers
+            'users' => $recommendedUsers
         ]);
     }
 }

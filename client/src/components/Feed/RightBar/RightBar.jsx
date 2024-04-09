@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
+
 const RightBar = ({ currentUser }) => {
     const navigate = useNavigate();
+    const [suggestedUsers, setSuggestedUsers] = useState([]);
+
+    useEffect(() => {
+        const getSuggestedUsers = async () => {
+            try {
+                const response = await sendRequest(requestMethods.GET, '/follow/recommended');
+                if (response.status === 200) {
+                    console.log(response.data.users);
+                    setSuggestedUsers(response.data.users);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        getSuggestedUsers();
+    }, []);
 
     const SuggestedCard = ({ user }) => {
         return (
@@ -43,6 +62,9 @@ const RightBar = ({ currentUser }) => {
                 </p>
             </div>
             <p className="light-text size-m bold">Suggested for you</p>
+            {suggestedUsers.map((user) => (
+                <SuggestedCard key={user.id} user={user} />
+            ))}
         </div>
     );
 };
