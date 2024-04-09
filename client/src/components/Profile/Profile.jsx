@@ -11,9 +11,14 @@ import { requestMethods, sendRequest } from '../../core/tools/apiRequest';
 import './index.css';
 import EditProfileForm from '../Elements/EditProfileForm/EditProfileForm';
 import LeftBar from '../Feed/LeftBar/LeftBar';
+import PhotoView from './PhotoView/PhotoView';
 
 const Profile = ({ currentUser }) => {
     const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false);
+
+    const [showPhotoView, setShowPhotoView] = useState(false);
+    const [selectedPost, setSelectedPost] = useState({});
+
     const [isFollowed, setIsFollowed] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [userInfo, setUserInfo] = useState({});
@@ -66,17 +71,29 @@ const Profile = ({ currentUser }) => {
         }
     };
 
-    const ProfilePost = ({ image }) => {
+    const ProfilePost = ({ post }) => {
+
+
         return (
-            <div className="profile-post flex center">
-                <img src={`http://127.0.0.1:8000/posts/${image}`} alt="post" className="user-post" />
-            </div>
+            <>
+                <div className="profile-post flex center">
+                    <img
+                        src={`http://127.0.0.1:8000/posts/${post.image}`}
+                        alt="post"
+                        className="user-post"
+                        onClick={() => {
+                            setShowPhotoView(true);
+                            setSelectedPost(post);
+                        }}
+                    />
+                </div>
+            </>
         );
     };
 
     return (
         <>
-            <LeftBar currentUser={currentUser} posts={userPosts} setPosts={setUserPosts}/>
+            <LeftBar currentUser={currentUser} posts={userPosts} setPosts={setUserPosts} />
             <div className="profile-main flex column">
                 <div className="profile-header flex center">
                     <div className="profile-image">
@@ -135,10 +152,11 @@ const Profile = ({ currentUser }) => {
                 <div className="profile-posts flex wrap">
                     {userPosts &&
                         userPosts.length > 0 &&
-                        userPosts.map((post) => <ProfilePost image={post.image} key={post.id} />)}
+                        userPosts.map((post) => <ProfilePost post={post} key={post.id} />)}
                 </div>
             </div>
             {isEditing && <EditProfileForm userInfo={userInfo} setIsEditing={setIsEditing} />}
+            {showPhotoView && <PhotoView setShowPhotoView={setShowPhotoView} post={selectedPost} />}
         </>
     );
 };
