@@ -25,7 +25,8 @@ class CommentsController extends Controller
             return [
                 'id' => $comment->id,
                 'content' => $comment->content,
-                'username' => $comment->user->username
+                'username' => $comment->user->username,
+                'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
             ];
         });
 

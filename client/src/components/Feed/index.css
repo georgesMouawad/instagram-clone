@@ -73,6 +73,7 @@
 .left-bar-main,
 .right-bar-main {
     width: 20%;
+    max-width: 240px;
     gap: 24px;
     padding-left: 24px;
     border-right: #dbdbdb 1px solid;

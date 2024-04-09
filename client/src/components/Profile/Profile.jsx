@@ -10,6 +10,7 @@ import { requestMethods, sendRequest } from '../../core/tools/apiRequest';
 
 import './index.css';
 import EditProfileForm from '../Elements/EditProfileForm/EditProfileForm';
+import LeftBar from '../Feed/LeftBar/LeftBar';
 
 const Profile = ({ currentUser }) => {
     const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false);
@@ -75,6 +76,7 @@ const Profile = ({ currentUser }) => {
 
     return (
         <>
+            <LeftBar currentUser={currentUser} posts={userPosts} setPosts={setUserPosts}/>
             <div className="profile-main flex column">
                 <div className="profile-header flex center">
                     <div className="profile-image">

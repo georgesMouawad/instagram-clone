@@ -11,7 +11,7 @@ import './styles/colors.css';
 import './styles/utilities.css';
 import './styles/queries.css';
 import './App.css';
-import EditProfileForm from './components/Elements/EditProfileForm/EditProfileForm';
+import PhotoView from './components/Profile/PhotoView/PhotoView';
 
 const App = () => {
     const [currentUser, setCurrentUser] = useState({});
@@ -40,7 +40,7 @@ const App = () => {
             <Route path="/" element={<Feed currentUser={currentUser} />} />
             <Route path="/auth" element={<Authentication />} />
             <Route path="/profile" element={<Profile currentUser={currentUser} />} />
-            <Route path="/editprofile" element={<EditProfileForm currentUser={currentUser} />} />
+            <Route path="/photoview" element={<PhotoView currentUser={currentUser} />} />
         </Routes>
     );
 };

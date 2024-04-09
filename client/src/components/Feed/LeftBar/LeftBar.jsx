@@ -63,68 +63,69 @@ const LeftBar = ({ posts, setPosts, currentUser }) => {
         }
     };
 
-    return (
-        <>
-            <div className="left-bar-main flex column">
-                <div className="left-bar-top">
-                    <div className="left-bar-logo">
-                        <img src="./images/assets/ig-text-logo.png" alt="logo" />
+    if (currentUser)
+        return (
+            <>
+                <div className="left-bar-main flex column">
+                    <div className="left-bar-top">
+                        <div className="left-bar-logo">
+                            <img src="./images/assets/ig-text-logo.png" alt="logo" />
+                        </div>
+                        <div className="left-bar-links flex column">
+                            <div className="left-bar-home flex">
+                                <FontAwesomeIcon icon={faHouse} className="left-bar-icon"/>
+                                <p onClick={() => navigate('/')}>Home</p>
+                            </div>
+                            <div className="left-bar-explore flex">
+                                <FontAwesomeIcon icon={faCompass} className="left-bar-icon" />
+                                <p onClick={()=>navigate('/')}>Explore</p>
+                            </div>
+                            <div className="left-bar-create flex">
+                                <FontAwesomeIcon icon={faSquarePlus} className="left-bar-icon" />
+                                <p
+                                    onClick={() => {
+                                        setShowPopup(true);
+                                    }}
+                                >
+                                    Create
+                                </p>
+                            </div>
+                            <div className="left-bar-profile flex">
+                                <img
+                                    src={
+                                        currentUser.image
+                                            ? `http://127.0.0.1:8000/profile-pictures/${currentUser.image}`
+                                            : './images/assets/avatar.png'
+                                    }
+                                    alt="avatar"
+                                />
+                                <p
+                                    onClick={() => {
+                                        navigate(`/profile?id=${currentUser.id}`);
+                                    }}
+                                >
+                                    Profile
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div className="left-bar-links flex column">
-                        <div className="left-bar-home flex">
-                            <FontAwesomeIcon icon={faHouse} className="left-bar-icon" />
-                            <p>Home</p>
-                        </div>
-                        <div className="left-bar-explore flex">
-                            <FontAwesomeIcon icon={faCompass} className="left-bar-icon" />
-                            <p>Explore</p>
-                        </div>
-                        <div className="left-bar-create flex">
-                            <FontAwesomeIcon icon={faSquarePlus} className="left-bar-icon" />
-                            <p
-                                onClick={() => {
-                                    setShowPopup(true);
-                                }}
-                            >
-                                Create
-                            </p>
-                        </div>
-                        <div className="left-bar-profile flex">
-                            <img
-                                src={
-                                    currentUser.image
-                                        ? `http://127.0.0.1:8000/profile-pictures/${currentUser.image}`
-                                        : './images/assets/avatar.png'
-                                }
-                                alt="avatar"
-                            />
-                            <p
-                                onClick={() => {
-                                    navigate(`/profile?id=${currentUser.id}`);
-                                }}
-                            >
-                                Profile
-                            </p>
+                    <div className="left-bar-bottom left-bar-links">
+                        <div className="left-bar-logout flex align-center">
+                            <FontAwesomeIcon icon={faRightFromBracket} className="left-bar-icon" />
+                            <p onClick={handleLogout}>Logout</p>
                         </div>
                     </div>
                 </div>
-                <div className="left-bar-bottom left-bar-links">
-                    <div className="left-bar-logout flex align-center">
-                        <FontAwesomeIcon icon={faRightFromBracket} className="left-bar-icon" />
-                        <p onClick={handleLogout}>Logout</p>
-                    </div>
-                </div>
-            </div>
-            {showPopup && (
-                <Popup
-                    handleContinue={handleImageUpload}
-                    imageAction={handleImageSelect}
-                    captionAction={handleCaptionChange}
-                    caption={caption}
-                />
-            )}
-        </>
-    );
+                {showPopup && (
+                    <Popup
+                        handleContinue={handleImageUpload}
+                        imageAction={handleImageSelect}
+                        captionAction={handleCaptionChange}
+                        caption={caption}
+                    />
+                )}
+            </>
+        );
 };
 
 export default LeftBar;

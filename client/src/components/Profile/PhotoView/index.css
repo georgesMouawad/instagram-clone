@@ -1,0 +1,21 @@
+.comments-view {
+    padding: 14px;
+}
+
+.comments-view-header {
+    
+}
+
+.comments-view img {
+    height: 30px;
+    width: 30px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.comments-view-caption,
+.comment-view {
+    margin: 8px 0;
+}
