@@ -71,7 +71,7 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                     content: userComment,
                 });
                 if (response.status !== 200) throw new Error('Error');
-
+                console.log(response.data);
                 setComments([...comments, response.data]);
                 setUserComment('');
             } catch (error) {
@@ -94,7 +94,7 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                     <div className="comment-top flex">
                         <p className="comment-username bold size-m">
                             {comment.username}
-                            <span className="comment-text size-m regular">{comment.content}</span>{' '}
+                            <span className="comment-text size-m regular"> {comment.content}</span>{' '}
                         </p>
                     </div>
                     <div className="comment-info size-s">
@@ -148,7 +148,7 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                         {comments && comments.length > 0 ? (
                             comments.map((comment) => <Comment key={comment.id} comment={comment} />)
                         ) : (
-                            <p className='comment-no-found'>No comments yet</p>
+                            <p className="comment-not-found size-m black-text">No comments yet</p>
                         )}
 
                         <div className="photo-view-bottom">
@@ -161,9 +161,9 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                             </div>
                             <div className="photo-view-post-details">
                                 <p className="photo-view-likes bold size-m">
-                                    <span>1234</span> Likes
+                                    <span>{post.likes.length}</span> {post.likes.length === 1 ? 'like' : 'likes'}
                                 </p>
-                                <p className="photo-view-date light-text size-m">1 day ago</p>
+                                <p className="photo-view-date light-text size-m">{timeAgo(post.created_at)}</p>
                             </div>
                             <form className="comment-add flex" onSubmit={handleCommentSubmit}>
                                 <input

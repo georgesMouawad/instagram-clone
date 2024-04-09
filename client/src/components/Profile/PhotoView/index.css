@@ -102,3 +102,7 @@
 .photo-view-post-details {
     margin: 16px 0;
 }
+
+.comment-not-found {
+    padding: 16px;
+}
