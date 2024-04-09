@@ -9,10 +9,17 @@
 }
 
 .popupmain-inner {
-    height: 50vh;
+    height: 700px;
     width: 30%;
-    min-width: 450px;
+    min-width: 700px;
     overflow: hidden;
+}
+
+.popup-header {
+    width: 100%;
+    padding: 8px;
+    /* margin-bottom: auto;   */
+    border-bottom: solid 1px #dbdbdb;
 }
 
 .popupmain-text {
@@ -38,4 +45,31 @@
     font-size: 20px;
     text-align: center;
     width: 400px;
+}
+
+.popupmain-inner > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-caption {
+    width: 100%;
+    z-index: 999;
+}
+
+.upload-caption input {
+    width: 100%;
+    border: none;
+    padding: 12px;
+}
+
+.share-btn {
+    padding-right: 12px;
+}
+
+.upload-btn {
+    height: 30px;
+    width: 170px;
+    margin-top: 16px;
 }

@@ -1,36 +1,65 @@
 import React from 'react';
 
-import './index.css';
-import Button from '../Button/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Popup = ({ message, handleContinue, imageAction = null, captionAction = null, setCaption }) => {
+import './index.css';
+
+const Popup = ({ handleContinue, handleImageSelect, handleImageUpload , handleCaptionChange, caption, setCaption, image, setShowPopup }) => {
     return (
-        <div className="popupmain flex column center black-bg-trsp-s">
-            <div className="popupmain-inner white-bg flex column space-evenly box-shadow border-radius">
-                {!imageAction ? (
-                    <div className="popupmain-text black-text">
-                        <h1>Notice</h1>
-                        <div>
-                            <p className="notice-text">{message}</p>
-                        </div>
+        <div className="popupmain flex column center black-bg-trsp">
+            <div className="exit-btn white-text flex center">
+                <FontAwesomeIcon icon={faXmark} onClick={() => setShowPopup(false)} />
+            </div>
+            <div className="popupmain-inner white-bg flex column space-between box-shadow border-radius-m">
+                <div className="popup-header flex center">
+                    <h1 className="size-l bold">Create a new post</h1>
+                </div>
+                {image && <img src={image} alt="post" />}
+                {!image && (
+                    <div className="popup-image flex column center">
+                        <img src="./images/assets/new-post.jpg" alt="" />
+                        <label
+                            htmlFor="image-upload"
+                            className="upload-btn primary-btn flex center border-radius size-m"
+                        >
+                            Select from computer
+                        </label>
                     </div>
-                ) : (
-                    <div className="image-upload">
-                        <div className="popupmain-image">
-                            <input type="file" id="image-upload" accept="image/*" name="image" onChange={imageAction} />
-                        </div>
-                        <div className="upload-caption">
+                )}
+                <div className="upload-caption white-bg flex">
+                    {image && (
+                        <>
                             <input
                                 type="text"
                                 placeholder="Enter caption"
-                                value={setCaption}
-                                onChange={captionAction}
+                                value={caption}
+                                onChange={handleCaptionChange}
                             />
-                        </div>
-                    </div>
-                )}
+                            <button className="share-btn bold size-m no-bg primary-text" onClick={handleImageUpload}>Share</button>
+                        </>
+                    )}
+                </div>
 
-                <Button text={'Continue'} type={'primary-btn'} size={'btn-l'} clickHandler={handleContinue} />
+                <div className="image-upload hidden">
+                    <div className="popupmain-image">
+                        <input
+                            type="file"
+                            id="image-upload"
+                            accept="image/*"
+                            name="image"
+                            onChange={handleImageSelect}
+                        />
+                    </div>
+                </div>
+
+                {/* <Button
+                    text={'Continue'}
+                    type={'primary-btn'}
+                    size={'btn-l'}
+                    clickHandler={handleContinue}
+                    target={'image-upload'}
+                /> */}
             </div>
         </div>
     );

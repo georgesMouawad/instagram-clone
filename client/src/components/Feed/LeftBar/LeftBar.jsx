@@ -73,12 +73,12 @@ const LeftBar = ({ posts, setPosts, currentUser }) => {
                         </div>
                         <div className="left-bar-links flex column">
                             <div className="left-bar-home flex">
-                                <FontAwesomeIcon icon={faHouse} className="left-bar-icon"/>
+                                <FontAwesomeIcon icon={faHouse} className="left-bar-icon" />
                                 <p onClick={() => navigate('/')}>Home</p>
                             </div>
                             <div className="left-bar-explore flex">
                                 <FontAwesomeIcon icon={faCompass} className="left-bar-icon" />
-                                <p onClick={()=>navigate('/')}>Explore</p>
+                                <p onClick={() => navigate('/')}>Explore</p>
                             </div>
                             <div className="left-bar-create flex">
                                 <FontAwesomeIcon icon={faSquarePlus} className="left-bar-icon" />
@@ -118,10 +118,14 @@ const LeftBar = ({ posts, setPosts, currentUser }) => {
                 </div>
                 {showPopup && (
                     <Popup
-                        handleContinue={handleImageUpload}
-                        imageAction={handleImageSelect}
-                        captionAction={handleCaptionChange}
+                        image={image}
+                        handleImageSelect={handleImageSelect}
+                        handleImageUpload={handleImageUpload}
                         caption={caption}
+                        setCaption={setCaption}
+                        handleCaptionChange={handleCaptionChange}
+                        handleContinue={handleImageUpload}
+                        setShowPopup={setShowPopup}
                     />
                 )}
             </>

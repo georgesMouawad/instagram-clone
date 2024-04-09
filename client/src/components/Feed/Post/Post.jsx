@@ -40,9 +40,7 @@ const Post = ({ post }) => {
         getComments();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    console.log(post)
-
+    
     const handleLike = async () => {
         setLiked(!liked);
         liked ? post.likes-- : post.likes++;
