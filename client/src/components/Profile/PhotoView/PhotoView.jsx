@@ -14,17 +14,6 @@ const PhotoView = ({ post, setShowPhotoView }) => {
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState('');
 
-    const postobject = {
-        id: 6,
-        image: '1712481515.jpg',
-        caption: 'Inventore nihil nostrum atque.',
-        created_at: '2024-04-07T08:55:23.000000Z',
-        user_id: 5,
-        username: 'hill.jefferey',
-        user_image: null,
-        likes: 2,
-    };
-
     useEffect(() => {
         const checkLiked = async () => {
             try {
