@@ -42,9 +42,13 @@
   background-color: #ffffff;
 }
 
+.black-bg-trsp {
+  background-color: rgba(0, 0, 0, 0.6);
+
+}
+
 .black-bg-trsp-s {
   background-color: rgba(0, 0, 0, 0.1);
-
 }
 
 .no-bg {

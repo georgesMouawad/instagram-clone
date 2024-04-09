@@ -1,9 +1,53 @@
-.comments-view {
-    padding: 14px;
+.photo-view-container {
+    width: 100%;
+    height: 100vh;
 }
 
-.comments-view-header {
-    
+.exit-btn {
+    font-size: 24px;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 999;
+    cursor: pointer;
+
+}
+
+.profile-view-nav {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin: 16px;
+}
+
+.photo-view-main {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 90vh;
+}
+
+.photo-view {
+    max-width: 60%;
+    height: 100%;
+}
+
+.photo-view img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.comments-view {
+    padding-left: 14px;
+}
+
+.comments-view-user {
+    padding: 16px 16px 16px 0;
+    border-bottom: solid 1px #dbdbdb;
 }
 
 .comments-view img {
@@ -17,5 +61,28 @@
 
 .comments-view-caption,
 .comment-view {
-    margin: 8px 0;
+   padding: 16px 16px 16px 0;
 }
+
+.comment-add {
+    border-top: solid 1px #dbdbdb;
+    width: 100%;
+}
+
+.comment-add input {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    outline: none;
+}
+
+.comment-add button {
+    background-color: transparent;
+    padding-right: 16px;
+}
+
+.photo-view-post-details {
+    margin: 16px 0;
+}
+
+
