@@ -128,8 +128,8 @@ class FollowController extends Controller
 
         $secondLevelFollowers = Follower::whereIn('follower_id', $firstLevelFollowers)->pluck('user_id');
 
-        $recommendations = $secondLevelFollowers->reject(function ($userId) use ($user) {
-            return $userId === $user->id;
+        $recommendations = $secondLevelFollowers->reject(function ($userId) use ($user, $following) {
+            return $userId === $user->id || $following->contains($userId);
         });
 
         $recommendedUsers = User::whereIn('id', $recommendations)->get();

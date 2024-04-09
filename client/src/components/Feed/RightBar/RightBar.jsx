@@ -38,7 +38,7 @@ const RightBar = ({ currentUser }) => {
                     />
                     <div className="suggested-card-text">
                         <p className="black-text size-m bold">{user.username}</p>
-                        <p className="light-text size-m">Suggested for you</p>
+                        <p className="light-text size-m">{user.name}</p>
                     </div>
                     <button className="follow-btn primary-text no-bg">Follow</button>
                 </div>
