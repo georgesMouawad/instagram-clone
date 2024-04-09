@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
+import { useUser } from '../../contexts/UserContext';
+
 import { sendRequest, requestMethods } from '../../core/tools/apiRequest';
 
 export const useAuthenticationLogic = () => {
@@ -13,6 +16,7 @@ export const useAuthenticationLogic = () => {
     });
 
     const navigate = useNavigate();
+    const {setCurrentUser} = useUser();
 
     useEffect(() => {
         if (!formData.email.includes('@') && formData.email.length > 0) {
@@ -37,6 +41,7 @@ export const useAuthenticationLogic = () => {
             const response = await sendRequest(requestMethods.POST, '/auth/login', data);
             if (response.status === 200) {
                 localStorage.setItem('token', JSON.stringify(response.data.token));
+                
                 navigate('/');
                 return;
             } else {

@@ -3,17 +3,20 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Popup from '../../Elements/Popup/Popup';
+import { useUser } from '../../../contexts/UserContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompass, faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { faHouse, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
-const LeftBar = ({ posts, setPosts, currentUser }) => {
+const LeftBar = ({ posts, setPosts }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [image, setImage] = useState(null);
     const [imageData, setImageData] = useState(null);
     const [caption, setCaption] = useState('');
+
+    const {currentUser} = useUser();
 
     const navigate = useNavigate();
 

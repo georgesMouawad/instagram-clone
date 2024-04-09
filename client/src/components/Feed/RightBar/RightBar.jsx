@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
+
+import { useUser } from '../../../contexts/UserContext';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
-const RightBar = ({ currentUser }) => {
+const RightBar = () => {
     const [suggestedUsers, setSuggestedUsers] = useState([]);
+    
+    const { currentUser } = useUser();
 
     const navigate = useNavigate();
 
@@ -61,7 +65,7 @@ const RightBar = ({ currentUser }) => {
         );
     };
 
-    return (
+    if(currentUser) return (
         <div className="right-bar-main">
             <div className="right-bar-profile flex align-center">
                 <img

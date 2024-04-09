@@ -1,20 +1,22 @@
+import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 import Authentication from './components/Authentication/Authentication';
 import Profile from './components/Profile/Profile';
 import Feed from './components/Feed/Feed';
 
+import { useUser } from './contexts/UserContext';
+import { UserProvider } from './contexts/UserContext';
 import { requestMethods, sendRequest } from './core/tools/apiRequest';
 
 import './styles/colors.css';
 import './styles/utilities.css';
 import './styles/queries.css';
 import './App.css';
-import PhotoView from './components/Profile/PhotoView/PhotoView';
+
 
 const App = () => {
-    const [currentUser, setCurrentUser] = useState({});
+    const {setCurrentUser} = useUser();
 
     const navigate = useNavigate();
 
@@ -36,12 +38,11 @@ const App = () => {
     }, []);
 
     return (
-        <Routes>
-            <Route path="/" element={<Feed currentUser={currentUser} />} />
-            <Route path="/auth" element={<Authentication />} />
-            <Route path="/profile" element={<Profile currentUser={currentUser} />} />
-            <Route path="/photoview" element={<PhotoView currentUser={currentUser} />} />
-        </Routes>
+            <Routes>
+                <Route path="/" element={<Feed />} />
+                <Route path="/auth" element={<Authentication />} />
+                <Route path="/profile" element={<Profile />} />
+            </Routes>
     );
 };
 
