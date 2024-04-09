@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 const RightBar = ({ currentUser }) => {
-    const navigate = useNavigate();
     const [suggestedUsers, setSuggestedUsers] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getSuggestedUsers = async () => {
@@ -25,6 +26,18 @@ const RightBar = ({ currentUser }) => {
     }, []);
 
     const SuggestedCard = ({ user }) => {
+        const [isFollowed, setIsFollowed] = useState(false);
+
+        const handleUserFollow = async () => {
+            try {
+                setIsFollowed(!isFollowed);
+                const response = await sendRequest(requestMethods.POST, `/follow`, { id: user.id });
+                if (response.status !== 200) throw new Error('Error');
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
         return (
             <div className="right-bar-suggested flex space-between">
                 <div className="suggested-card flex align-center">
@@ -40,7 +53,9 @@ const RightBar = ({ currentUser }) => {
                         <p className="black-text size-m bold">{user.username}</p>
                         <p className="light-text size-m">{user.name}</p>
                     </div>
-                    <button className="follow-btn primary-text no-bg">Follow</button>
+                    <button className={isFollowed ? 'follow-btn primary-bg white-text border-radius-m' : 'follow-btn primary-text no-bg'} onClick={handleUserFollow}>
+                        {isFollowed ? 'Following' : 'Follow'}
+                    </button>
                 </div>
             </div>
         );
@@ -61,7 +76,7 @@ const RightBar = ({ currentUser }) => {
                     {currentUser.username}
                 </p>
             </div>
-            <p className="light-text size-m bold">Suggested for you</p>
+            {suggestedUsers.length > 0 && <p className="light-text size-m bold">Suggested for you</p>}
             {suggestedUsers.map((user) => (
                 <SuggestedCard key={user.id} user={user} />
             ))}

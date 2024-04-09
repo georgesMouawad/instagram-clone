@@ -163,7 +163,10 @@
     padding: 8px 0;
 }
 
-.follow-button:hover {
+.follow-btn {
+    padding: 4px 8px;
+}
+
+.follow-btn:hover {
     cursor: pointer;
-    color: #00376b;
 }
