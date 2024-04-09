@@ -45,7 +45,6 @@ const Profile = () => {
                 const response = await sendRequest(requestMethods.GET, `/users?id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
                 setUserInfo(response.data.user);
-                console.log(response.data.user);
             } catch (error) {
                 console.log(error);
             }
@@ -54,7 +53,6 @@ const Profile = () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/follow/check?id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
-                console.log(response.data.following);
                 setIsFollowed(response.data.following);
             } catch (error) {
                 console.log(error);

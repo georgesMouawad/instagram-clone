@@ -41,7 +41,6 @@ export const useAuthenticationLogic = () => {
             const response = await sendRequest(requestMethods.POST, '/auth/login', data);
             if (response.status === 200) {
                 localStorage.setItem('token', JSON.stringify(response.data.token));
-                
                 navigate('/');
                 return;
             } else {

@@ -35,7 +35,7 @@ const App = () => {
         };
 
         getCurrentUser();
-    }, []);
+    }, [setCurrentUser]);
 
     return (
             <Routes>

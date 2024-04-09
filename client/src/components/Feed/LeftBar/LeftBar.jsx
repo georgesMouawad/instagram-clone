@@ -16,7 +16,7 @@ const LeftBar = ({ posts, setPosts }) => {
     const [imageData, setImageData] = useState(null);
     const [caption, setCaption] = useState('');
 
-    const {currentUser} = useUser();
+    const {setCurrentUser, currentUser} = useUser();
 
     const navigate = useNavigate();
 
@@ -24,6 +24,7 @@ const LeftBar = ({ posts, setPosts }) => {
         try {
             const response = await sendRequest(requestMethods.POST, '/auth/logout', null);
             if (response.status === 200) {
+                setCurrentUser(null);
                 localStorage.clear();
                 navigate('/auth');
                 return;
