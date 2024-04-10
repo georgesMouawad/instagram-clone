@@ -11,7 +11,7 @@ import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 
 import './index.css';
 
-const PhotoView = ({ post, setShowPhotoView, userImage }) => {
+const PhotoView = ({ post, setPopupState, popupState, userImage }) => {
     const [liked, setLiked] = useState(false);
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState('');
@@ -79,7 +79,10 @@ const PhotoView = ({ post, setShowPhotoView, userImage }) => {
         return (
             <div className="photo-view-container black-bg-trsp flex space-between">
                 <div className="exit-btn white-text flex center">
-                    <FontAwesomeIcon icon={faXmark} onClick={() => setShowPhotoView(false)} />
+                    <FontAwesomeIcon
+                        icon={faXmark}
+                        onClick={() => setPopupState({ ...popupState, showPhotoView: false })}
+                    />
                 </div>
                 <div className="profile-view-nav flex center black-text white-bg">
                     <FontAwesomeIcon icon={faChevronLeft} />

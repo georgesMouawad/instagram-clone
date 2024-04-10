@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { sendRequest, requestMethods } from '../../../core/tools/apiRequest';
 
 import './index.css';
 import Button from '../Button/Button';
 
-const EditProfileForm = ({ userInfo, setIsEditing }) => {
+const EditProfileForm = ({ userInfo, setPopupState, popupState }) => {
     const [error, setError] = useState('');
     const [image, setImage] = useState(null);
     const [imageData, setImageData] = useState(null);
@@ -56,8 +56,7 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
                 },
             });
             if (response.status !== 200) throw new Error('Error');
-            console.log(response.data);
-            setIsEditing(false);
+            setPopupState({ ...popupState, isEditing: false });
         } catch (error) {
             setError(error.response.data.message);
             console.log(error.response.data.message);
@@ -144,13 +143,12 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
                         clickHandler={handleEditProfile}
                         handleSubmit={true}
                         type={'submit'}
-      
                     />
                     <Button
                         color={'secondary-btn'}
                         size={'btn-s'}
                         text={'Cancel'}
-                        clickHandler={() => setIsEditing(false)}
+                        clickHandler={() => setPopupState({ ...popupState, isEditing: false })}
                     />
                 </div>
                 {error && (

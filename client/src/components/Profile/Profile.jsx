@@ -17,10 +17,12 @@ import './index.css';
 
 const Profile = () => {
     const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false);
-    const [showPhotoView, setShowPhotoView] = useState(false);
+    const [popupState, setPopupState] = useState({
+        isEditing: false,
+        showPhotoView: false,
+    });
     const [selectedPost, setSelectedPost] = useState({});
     const [isFollowed, setIsFollowed] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const [userPosts, setUserPosts] = useState([]);
     const [searchParams] = useSearchParams();
@@ -63,8 +65,7 @@ const Profile = () => {
             getUserInfo();
             checkIfFollowed();
         }
-
-    }, [isEditing, searchParams, currentUser]);
+    }, [popupState.isEditing, searchParams, currentUser]);
 
     useEffect(() => {
         setIsCurrentUserProfile(currentUser && currentUser.id === parseInt(searchParams.get('id')));
@@ -89,7 +90,7 @@ const Profile = () => {
                         alt="post"
                         className="user-post"
                         onClick={() => {
-                            setShowPhotoView(true);
+                            setPopupState({ ...popupState, showPhotoView: true });
                             setSelectedPost(post);
                         }}
                     />
@@ -122,7 +123,7 @@ const Profile = () => {
                                         color={'secondary-btn'}
                                         size={'btn-s'}
                                         clickHandler={() => {
-                                            setIsEditing(true);
+                                            setPopupState({ ...popupState, isEditing: true });
                                         }}
                                         text={'Edit profile'}
                                     />
@@ -163,9 +164,9 @@ const Profile = () => {
                             userPosts.map((post) => <ProfilePost post={post} key={post.id} />)}
                     </div>
                 </div>
-                {isEditing && <EditProfileForm userInfo={userInfo} setIsEditing={setIsEditing} />}
-                {showPhotoView && (
-                    <PhotoView setShowPhotoView={setShowPhotoView} post={selectedPost} userImage={userInfo.image} />
+                {popupState.isEditing && <EditProfileForm userInfo={userInfo} setPopupState={setPopupState} popupState={popupState} />}
+                {popupState.showPhotoView && (
+                    <PhotoView setPopupState={setPopupState} popupState={popupState} post={selectedPost} userImage={userInfo.image} />
                 )}
             </>
         );
