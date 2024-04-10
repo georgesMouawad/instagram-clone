@@ -15,7 +15,7 @@ const LeftBar = ({ posts, setPosts, setProfileDetails }) => {
     const [image, setImage] = useState(null);
     const [imageData, setImageData] = useState(null);
     const [caption, setCaption] = useState('');
-    
+
     const { setCurrentUser, currentUser } = useUser();
 
     const navigate = useNavigate();
@@ -33,6 +33,8 @@ const LeftBar = ({ posts, setPosts, setProfileDetails }) => {
             console.error(error);
         }
     };
+
+    console.log('left bar')
 
     const handleImageSelect = (event) => {
         const file = event.target.files[0];
@@ -59,8 +61,10 @@ const LeftBar = ({ posts, setPosts, setProfileDetails }) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            if (response.status !== 201) throw new Error('Error');
             setShowPopup(false);
+            setCaption('');
+            setImage(null);
+            if (response.status !== 201) throw new Error('Error');
             setProfileDetails &&
                 setProfileDetails((prevDetails) => ({
                     ...prevDetails,

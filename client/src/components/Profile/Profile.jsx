@@ -20,6 +20,7 @@ const Profile = () => {
     const [popupState, setPopupState] = useState({
         isEditing: false,
         showPhotoView: false,
+        showConfirmationPopup: false,
     });
     const [selectedPost, setSelectedPost] = useState({});
     const [profileDetails, setProfileDetails] = useState({
@@ -27,9 +28,6 @@ const Profile = () => {
         userPosts: {},
         isFollowed: false,
     });
-    // const [isFollowed, setIsFollowed] = useState(false);
-    // const [userInfo, setUserInfo] = useState({});
-    // const [userPosts, setUserPosts] = useState([]);
     const [searchParams] = useSearchParams();
     const { currentUser } = useUser();
 
@@ -71,6 +69,8 @@ const Profile = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [popupState.isEditing, searchParams, currentUser]);
+
+    console.log('profile')
 
     const handleUserFollow = async () => {
         try {
@@ -178,6 +178,7 @@ const Profile = () => {
                 {popupState.showPhotoView && (
                     <PhotoView
                         setPopupState={setPopupState}
+                        setProfileDetails={setProfileDetails}
                         popupState={popupState}
                         post={selectedPost}
                         userImage={profileDetails.userInfo.image}

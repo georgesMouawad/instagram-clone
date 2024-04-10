@@ -24,6 +24,7 @@ const Popup = ({
                     onClick={() => {
                         setShowPopup(false);
                         setImage(null);
+                        setCaption('');
                     }}
                 />
             </div>

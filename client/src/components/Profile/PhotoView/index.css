@@ -72,7 +72,7 @@
 .comment-add {
     border-top: solid 1px #dbdbdb;
     margin-right: 16px;
-    width: 100%;
+    width: auto;
 }
 
 .comment-add input {
@@ -105,4 +105,9 @@
 
 .comment-not-found {
     padding: 16px;
+}
+
+.delete-post-btn:hover {
+    color: red;
+    cursor: pointer;
 }
