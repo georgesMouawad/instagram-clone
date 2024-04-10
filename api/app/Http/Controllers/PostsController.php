@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\User;
 
 class PostsController extends Controller
 {
@@ -14,7 +15,11 @@ class PostsController extends Controller
 
         if (!$post_id && !$user_id) {
 
-            $posts = Post::with('user:id,username,image', 'likes')->get();
+            $user = User::find(auth()->user()->id);
+
+            $following = $user->following()->pluck('users.id');
+
+            $posts = Post::whereIn('user_id', $following)->with('user:id,username,image', 'likes')->get();
 
             $posts = $posts->map(function ($post) {
                 return [
