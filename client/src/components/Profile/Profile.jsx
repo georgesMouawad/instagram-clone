@@ -17,10 +17,8 @@ import './index.css';
 
 const Profile = () => {
     const [isCurrentUserProfile, setIsCurrentUserProfile] = useState(false);
-
     const [showPhotoView, setShowPhotoView] = useState(false);
     const [selectedPost, setSelectedPost] = useState({});
-
     const [isFollowed, setIsFollowed] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [userInfo, setUserInfo] = useState({});
@@ -28,13 +26,13 @@ const Profile = () => {
     const [searchParams] = useSearchParams();
 
     const { currentUser } = useUser();
-    console.log(currentUser);
 
     useEffect(() => {
         const getUserPosts = async () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/posts?user_id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
+                console.log(response.data.posts);
                 setUserPosts(response.data.posts.sort((a, b) => (a.created_at < b.created_at ? 1 : -1)));
             } catch (error) {
                 console.log(error);
@@ -44,6 +42,7 @@ const Profile = () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/users?id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
+                console.log(response.data.user);
                 setUserInfo(response.data.user);
             } catch (error) {
                 console.log(error);
@@ -58,11 +57,15 @@ const Profile = () => {
                 console.log(error);
             }
         };
-        setIsCurrentUserProfile(currentUser ? currentUser.id === parseInt(searchParams.get('id')) : false);
+
         getUserPosts();
         getUserInfo();
-        if (!isCurrentUserProfile) checkIfFollowed();
+        checkIfFollowed();
     }, [isEditing]);
+
+    useEffect(() => {
+        setIsCurrentUserProfile(currentUser && currentUser.id === parseInt(searchParams.get('id')));
+    }, [currentUser, searchParams]);
 
     const handleUserFollow = async () => {
         try {

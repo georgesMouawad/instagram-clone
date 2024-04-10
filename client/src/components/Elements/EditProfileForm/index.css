@@ -8,6 +8,11 @@
     padding: 48px 24px;
 }
 
+.edit-profile-image label {
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
 .edit-profile-image {
     padding: 16px 12px;
 }

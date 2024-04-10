@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 
 const EditProfileForm = ({ userInfo, setIsEditing }) => {
     const [error, setError] = useState('');
-    const [image, setImage] = useState(null);
+
     const [imageData, setImageData] = useState(null);
     const [formData, setFormData] = useState(
         userInfo
@@ -16,7 +16,7 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
                   email: userInfo.email,
                   bio: userInfo.bio,
                   name: userInfo.name,
-                  image: image ?? userInfo.image,
+                  image: userInfo.image,
               }
             : {}
     );
@@ -35,7 +35,7 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            setImage(reader.result);
+            userInfo.image = reader.result;
         };
     };
 
@@ -79,15 +79,16 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
                         />
                         <p className="size-l bold">{userInfo.username}</p>
                     </div>
-                    <button htmlFor="image-upload" className="primary-btn"></button>
-
+                    <label htmlFor="image-upload" className="primary-btn size-m bold border-radius">
+                        Change photo
+                    </label>
                     <input
+                        className="hidden"
                         type="file"
                         id="image-upload"
                         accept="image/*"
                         name="image"
                         onChange={handleImageSelect}
-                        className=""
                     />
                 </div>
                 <div className="edit-profile-header flex size-l black-text bold">
@@ -134,10 +135,13 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
                     />
                 </label>
                 <div className="edit-profile-btns flex center">
-                    <button className="primary-btn btn-s" type="submit">
-                        Submit
-                    </button>
-                    <Button type={'primary-btn'} size={'btn-s'} text={'Submit'} clickHandler={handleEditProfile} />
+                    <Button
+                        type={'primary-btn'}
+                        size={'btn-s'}
+                        text={'Submit'}
+                        clickHandler={handleEditProfile}
+                        handleSubmit={true}
+                    />
                     <Button
                         type={'secondary-btn'}
                         size={'btn-s'}
