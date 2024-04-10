@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
-import { sendRequest, requestMethods } from '../../../core/tools/apiRequest';
-
-import './index.css';
 import Button from '../Button/Button';
 
+import { sendRequest, requestMethods } from '../../../core/tools/apiRequest';
+import { useUser } from '../../../contexts/UserContext';
+
+import './index.css';
+
 const EditProfileForm = ({ userInfo, setPopupState, popupState }) => {
+
     const [error, setError] = useState('');
     const [image, setImage] = useState(null);
     const [imageData, setImageData] = useState(null);
@@ -20,6 +23,8 @@ const EditProfileForm = ({ userInfo, setPopupState, popupState }) => {
               }
             : {}
     );
+
+    const {currentUser, setCurrentUser} = useUser();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -56,6 +61,8 @@ const EditProfileForm = ({ userInfo, setPopupState, popupState }) => {
                 },
             });
             if (response.status !== 200) throw new Error('Error');
+            console.log(image)
+            setCurrentUser(response.data.user);
             setPopupState({ ...popupState, isEditing: false });
         } catch (error) {
             setError(error.response.data.message);

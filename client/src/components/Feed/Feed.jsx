@@ -25,18 +25,19 @@ const Feed = () => {
         };
         getPosts();
     }, []);
-    
+
     return (
-        <>
+        <div className='feed-all flex'>
             <div className="sidebar">
                 <LeftBar currentUser={currentUser} posts={posts} setPosts={setPosts} />
             </div>
             <div className="feed-main flex">
-                <div className="spacer"></div>
                 <Main currentUser={currentUser} posts={posts} />
+            </div>
+            <div className="right-bar">
                 <RightBar currentUser={currentUser} />
             </div>
-        </>
+        </div>
     );
 };
 

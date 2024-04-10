@@ -1,15 +1,16 @@
+.feed-all {
+    justify-content: space-between;
+}
 .feed-main {
     min-height: 100vh;
     justify-content: space-between;
+    margin-left: 240px;
 }
 
 .feed-mid-container {
     margin-top: 32px;
 }
 
-.spacer {
-    width: 20%;
-}
 
 .post-container {
     width: 470px;
@@ -70,21 +71,15 @@
     outline: none;
 }
 
-.left-bar-main,
-.right-bar-main {
-    width: 20%;
-    max-width: 240px;
+.left-bar-main {
     gap: 24px;
     padding-left: 24px;
     border-right: #dbdbdb 1px solid;
     z-index: 1!important;
 }
 
-.right-bar-main {
-    width: 25%;
-}
-
 .left-bar-main {
+    width: 240px;
     justify-content: space-between;
     padding-bottom: 36px;
     height: 100vh;
@@ -126,8 +121,15 @@
     object-fit: cover;
 }
 
+.right-bar {
+    width:20%
+}
+
 .right-bar-main {
     padding: 0;
+    width: 100%;
+    gap:24px;
+    z-index: 1;
 }
 
 .right-bar-profile {
