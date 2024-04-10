@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -10,12 +10,12 @@ import { faCompass, faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { faHouse, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
-const LeftBar = ({ posts, setPosts, setProfileDetails}) => {
+const LeftBar = ({ posts, setPosts, setProfileDetails }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [image, setImage] = useState(null);
     const [imageData, setImageData] = useState(null);
     const [caption, setCaption] = useState('');
-
+    
     const { setCurrentUser, currentUser } = useUser();
 
     const navigate = useNavigate();
@@ -61,9 +61,12 @@ const LeftBar = ({ posts, setPosts, setProfileDetails}) => {
             });
             if (response.status !== 201) throw new Error('Error');
             setShowPopup(false);
-            setProfileDetails && setProfileDetails((prevDetails) => ({ ...prevDetails, userPosts: [response.data.post, ...prevDetails.userPosts] }));
+            setProfileDetails &&
+                setProfileDetails((prevDetails) => ({
+                    ...prevDetails,
+                    userPosts: [response.data.post, ...prevDetails.userPosts],
+                }));
             setPosts && setPosts([response.data.post, ...posts]);
-
         } catch (error) {
             console.log(error);
         }
@@ -125,6 +128,7 @@ const LeftBar = ({ posts, setPosts, setProfileDetails}) => {
                 {showPopup && (
                     <Popup
                         image={image}
+                        setImage={setImage}
                         handleImageSelect={handleImageSelect}
                         handleImageUpload={handleImageUpload}
                         caption={caption}

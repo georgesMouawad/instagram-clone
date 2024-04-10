@@ -34,7 +34,7 @@ const Profile = () => {
     const { currentUser } = useUser();
 
     useEffect(() => {
-        const getUserPosts = async () => {
+        const getProfilePosts = async () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/posts?user_id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
@@ -44,7 +44,7 @@ const Profile = () => {
                 console.log(error);
             }
         };
-        const getUserInfo = async () => {
+        const getProfileInfo = async () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/users?id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
@@ -66,13 +66,12 @@ const Profile = () => {
         if (currentUser) {
             setIsCurrentUserProfile(currentUser && currentUser.id === parseInt(searchParams.get('id')));
             !isCurrentUserProfile && checkIfFollowed();
-            getUserPosts();
-            getUserInfo();
+            getProfilePosts();
+            getProfileInfo();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [popupState.isEditing, searchParams, currentUser]);
 
-    console.log(profileDetails);
     const handleUserFollow = async () => {
         try {
             setProfileDetails({ ...profileDetails, isFollowed: !profileDetails.isFollowed });

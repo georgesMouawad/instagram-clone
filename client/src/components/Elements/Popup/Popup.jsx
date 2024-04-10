@@ -5,11 +5,27 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import './index.css';
 
-const Popup = ({ handleContinue, handleImageSelect, handleImageUpload , handleCaptionChange, caption, setCaption, image, setShowPopup }) => {
+const Popup = ({
+    handleContinue,
+    handleImageSelect,
+    handleImageUpload,
+    handleCaptionChange,
+    caption,
+    setCaption,
+    image,
+    setImage,
+    setShowPopup,
+}) => {
     return (
         <div className="popupmain flex column center black-bg-trsp">
             <div className="exit-btn white-text flex center">
-                <FontAwesomeIcon icon={faXmark} onClick={() => setShowPopup(false)} />
+                <FontAwesomeIcon
+                    icon={faXmark}
+                    onClick={() => {
+                        setShowPopup(false);
+                        setImage(null);
+                    }}
+                />
             </div>
             <div className="popupmain-inner white-bg flex column space-between box-shadow border-radius-m">
                 <div className="popup-header flex center">
@@ -36,7 +52,9 @@ const Popup = ({ handleContinue, handleImageSelect, handleImageUpload , handleCa
                                 value={caption}
                                 onChange={handleCaptionChange}
                             />
-                            <button className="share-btn bold size-m no-bg primary-text" onClick={handleImageUpload}>Share</button>
+                            <button className="share-btn bold size-m no-bg primary-text" onClick={handleImageUpload}>
+                                Share
+                            </button>
                         </>
                     )}
                 </div>
