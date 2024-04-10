@@ -20,12 +20,13 @@ class CommentsController extends Controller
             ], 404);
         }
 
-        $comments = Comment::with('user:id,username')->where('post_id', $post_id)->get();
+        $comments = Comment::with('user:id,username,image')->where('post_id', $post_id)->get();
         $comments = $comments->map(function ($comment) {
             return [
                 'id' => $comment->id,
                 'content' => $comment->content,
                 'username' => $comment->user->username,
+                'user_image' => $comment->user->image,
                 'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
             ];
         });
@@ -58,6 +59,7 @@ class CommentsController extends Controller
             'id' => $comment->id,
             'content' => $comment->content,
             'username' => $comment->user->username,
+            'user_image' => $comment->user->image,
             'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
         ]);
     }

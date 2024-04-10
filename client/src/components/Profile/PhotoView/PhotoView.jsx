@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
+import { useUser } from '../../../contexts/UserContext';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +14,10 @@ const PhotoView = ({ post, setShowPhotoView }) => {
     const [liked, setLiked] = useState(false);
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState('');
+
+    const { currentUser } = useUser();
+
+    console.log(post);
 
     useEffect(() => {
         const checkLiked = async () => {
@@ -77,7 +82,14 @@ const PhotoView = ({ post, setShowPhotoView }) => {
         return (
             <div className="comment-view flex">
                 <div className="comment-avatar flex center">
-                    <img src="./images/assets/avatar.png" alt="avatar" />
+                    <img
+                        src={
+                            comment.user_image
+                                ? `http://127.0.0.1:8000/profile-pictures/${comment.user_image}`
+                                : './images/assets/avatar.png'
+                        }
+                        alt="avatar"
+                    />
                 </div>
                 <div className="comment-view-text flex column">
                     <div className="comment-top flex">
@@ -112,8 +124,8 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                             <div className="comments-view-user flex align-center bold size-m">
                                 <img
                                     src={
-                                        post.user_image
-                                            ? `http://127.0.0.1:8000/profile-pictures/${post.user_image}`
+                                        currentUser.image
+                                            ? `http://127.0.0.1:8000/profile-pictures/${currentUser.image}`
                                             : './images/assets/avatar.png'
                                     }
                                     alt="user-avatar"
@@ -123,8 +135,8 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                             <div className="comments-view-caption size-m flex align-center">
                                 <img
                                     src={
-                                        post.user_image
-                                            ? `http://127.0.0.1:8000/profile-pictures/${post.image}`
+                                        currentUser.image
+                                            ? `http://127.0.0.1:8000/profile-pictures/${currentUser.image}`
                                             : './images/assets/avatar.png'
                                     }
                                     alt="user-avatar"
@@ -150,7 +162,7 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                             </div>
                             <div className="photo-view-post-details">
                                 <p className="photo-view-likes bold size-m">
-                                    <span>{post.likes.length}</span> {post.likes.length === 1 ? 'like' : 'likes'}
+                                    <span>{post.likes}</span> {post.likes === 1 ? 'like' : 'likes'}
                                 </p>
                                 <p className="photo-view-date light-text size-m">{timeAgo(post.created_at)}</p>
                             </div>
