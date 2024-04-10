@@ -1,80 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useLeftBarLogic } from './logic';
 
 import Popup from '../../Elements/Popup/Popup';
-import { useUser } from '../../../contexts/UserContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompass, faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { faHouse, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 const LeftBar = ({ posts, setPosts, setProfileDetails }) => {
-    const [showPopup, setShowPopup] = useState(false);
-    const [image, setImage] = useState(null);
-    const [imageData, setImageData] = useState(null);
-    const [caption, setCaption] = useState('');
-
-    const { setCurrentUser, currentUser } = useUser();
-
-    const navigate = useNavigate();
-
-    const handleLogout = async () => {
-        try {
-            const response = await sendRequest(requestMethods.POST, '/auth/logout', null);
-            if (response.status === 200) {
-                setCurrentUser(null);
-                localStorage.clear();
-                navigate('/auth');
-                return;
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    console.log('left bar')
-
-    const handleImageSelect = (event) => {
-        const file = event.target.files[0];
-        setImageData(file);
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-            setImage(reader.result);
-        };
-    };
-
-    const handleCaptionChange = (event) => {
-        setCaption(event.target.value);
-    };
-
-    const handleImageUpload = async () => {
-        const data = new FormData();
-        data.append('image', imageData);
-        data.append('caption', caption);
-
-        try {
-            const response = await sendRequest(requestMethods.POST, '/posts', data, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            setShowPopup(false);
-            setCaption('');
-            setImage(null);
-            if (response.status !== 201) throw new Error('Error');
-            setProfileDetails &&
-                setProfileDetails((prevDetails) => ({
-                    ...prevDetails,
-                    userPosts: [response.data.post, ...prevDetails.userPosts],
-                }));
-            setPosts && setPosts([response.data.post, ...posts]);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    const {
+        image,
+        caption,
+        setImage,
+        navigate,
+        showPopup,
+        setCaption,
+        currentUser,
+        handleLogout,
+        setShowPopup,
+        handleImageSelect,
+        handleImageUpload,
+        handleCaptionChange,
+    } = useLeftBarLogic({ posts, setPosts, setProfileDetails });
 
     if (currentUser)
         return (
@@ -132,14 +80,14 @@ const LeftBar = ({ posts, setPosts, setProfileDetails }) => {
                 {showPopup && (
                     <Popup
                         image={image}
+                        caption={caption}
                         setImage={setImage}
+                        setCaption={setCaption}
+                        setShowPopup={setShowPopup}
+                        handleContinue={handleImageUpload}
                         handleImageSelect={handleImageSelect}
                         handleImageUpload={handleImageUpload}
-                        caption={caption}
-                        setCaption={setCaption}
                         handleCaptionChange={handleCaptionChange}
-                        handleContinue={handleImageUpload}
-                        setShowPopup={setShowPopup}
                     />
                 )}
             </>

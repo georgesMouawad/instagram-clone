@@ -3,7 +3,6 @@ import React from 'react';
 import Post from '../Post/Post';
 
 const Main = ({posts, currentUser}) => {
-    console.log('main');
     return (
         <div className="feed-mid-container flex column">
             {posts &&
