@@ -5,9 +5,9 @@ import { useAuthenticationLogic } from './logic';
 
 import './index.css';
 
-const Authentication = ({ setCurrentUser }) => {
+const Authentication = () => {
     const { isLogin, error, formData, setFormData, navigate, switchHandler, handleLogin, handleSignup } =
-        useAuthenticationLogic({setCurrentUser});
+        useAuthenticationLogic();
 
     return (
         <div className="form-component flex center">

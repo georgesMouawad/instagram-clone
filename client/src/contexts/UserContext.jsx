@@ -1,9 +1,26 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+
+import { sendRequest, requestMethods } from '../core/tools/apiRequest';
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        console.log('getcurrentuser invoked');
+        const getCurrentUser = async () => {
+            try {
+                const response = await sendRequest(requestMethods.GET, '/user');
+                response.status === 200 && setCurrentUser(response.data.user);
+            } catch (error) {
+                setCurrentUser(null);
+                console.error(error);
+            }
+        };
+        getCurrentUser();
+    }, []);
+
     return <UserContext.Provider value={{ currentUser, setCurrentUser }}>{children}</UserContext.Provider>;
 };
 

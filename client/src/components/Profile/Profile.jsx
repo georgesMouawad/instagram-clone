@@ -62,7 +62,7 @@ const Profile = () => {
         getUserPosts();
         getUserInfo();
         if (!isCurrentUserProfile) checkIfFollowed();
-    }, [isEditing, currentUser]);
+    }, [isEditing]);
 
     const handleUserFollow = async () => {
         try {

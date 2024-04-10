@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { useUser } from '../../contexts/UserContext';
-
 import { sendRequest, requestMethods } from '../../core/tools/apiRequest';
 
 export const useAuthenticationLogic = () => {
@@ -16,6 +15,7 @@ export const useAuthenticationLogic = () => {
     });
 
     const navigate = useNavigate();
+
     const {setCurrentUser} = useUser();
 
     useEffect(() => {
@@ -41,6 +41,7 @@ export const useAuthenticationLogic = () => {
             const response = await sendRequest(requestMethods.POST, '/auth/login', data);
             if (response.status === 200) {
                 localStorage.setItem('token', JSON.stringify(response.data.token));
+                setCurrentUser(response.data.token);
                 navigate('/');
                 return;
             } else {
@@ -57,6 +58,7 @@ export const useAuthenticationLogic = () => {
             const response = await sendRequest(requestMethods.POST, '/auth/register', formData);
             if (response.status === 201) {
                 localStorage.setItem('token', JSON.stringify(response.data.token));
+                setCurrentUser(response.data.token);
                 navigate('/');
                 return;
             } else {
