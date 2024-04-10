@@ -61,6 +61,7 @@ const Profile = () => {
         getUserPosts();
         getUserInfo();
         checkIfFollowed();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isEditing]);
 
     useEffect(() => {
@@ -116,7 +117,7 @@ const Profile = () => {
                                 <p className="size-xl">{userInfo.username}</p>
                                 {isCurrentUserProfile ? (
                                     <Button
-                                        type={'secondary-btn'}
+                                        color={'secondary-btn'}
                                         size={'btn-s'}
                                         clickHandler={() => {
                                             setIsEditing(true);
@@ -125,7 +126,7 @@ const Profile = () => {
                                     />
                                 ) : (
                                     <Button
-                                        type={isFollowed ? 'secondary-btn' : 'primary-btn'}
+                                        color={isFollowed ? 'secondary-btn' : 'primary-btn'}
                                         size={'btn-s'}
                                         clickHandler={handleUserFollow}
                                         text={isFollowed ? 'Following' : 'Follow'}

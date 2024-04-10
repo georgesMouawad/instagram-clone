@@ -52,14 +52,6 @@ const Popup = ({ handleContinue, handleImageSelect, handleImageUpload , handleCa
                         />
                     </div>
                 </div>
-
-                {/* <Button
-                    text={'Continue'}
-                    type={'primary-btn'}
-                    size={'btn-l'}
-                    clickHandler={handleContinue}
-                    target={'image-upload'}
-                /> */}
             </div>
         </div>
     );

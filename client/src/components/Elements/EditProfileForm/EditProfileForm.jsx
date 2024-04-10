@@ -7,7 +7,7 @@ import Button from '../Button/Button';
 
 const EditProfileForm = ({ userInfo, setIsEditing }) => {
     const [error, setError] = useState('');
-
+    const [image, setImage] = useState(null);
     const [imageData, setImageData] = useState(null);
     const [formData, setFormData] = useState(
         userInfo
@@ -35,7 +35,7 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            userInfo.image = reader.result;
+            setImage(reader.result);
         };
     };
 
@@ -71,7 +71,9 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
                     <div className="edit-profile-info flex">
                         <img
                             src={
-                                userInfo && userInfo.image
+                                image
+                                    ? `${image}`
+                                    : userInfo && userInfo.image
                                     ? `http://127.0.0.1:8000/profile-pictures/${userInfo.image}`
                                     : './images/assets/avatar.png'
                             }
@@ -136,14 +138,16 @@ const EditProfileForm = ({ userInfo, setIsEditing }) => {
                 </label>
                 <div className="edit-profile-btns flex center">
                     <Button
-                        type={'primary-btn'}
+                        color={'primary-btn'}
                         size={'btn-s'}
                         text={'Submit'}
                         clickHandler={handleEditProfile}
                         handleSubmit={true}
+                        type={'submit'}
+      
                     />
                     <Button
-                        type={'secondary-btn'}
+                        color={'secondary-btn'}
                         size={'btn-s'}
                         text={'Cancel'}
                         clickHandler={() => setIsEditing(false)}

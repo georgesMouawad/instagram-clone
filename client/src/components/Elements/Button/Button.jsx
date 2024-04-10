@@ -1,11 +1,12 @@
 import './index.css';
 
-const Button = ({ text, clickHandler, type, size, handleSubmit = false }) => {
+const Button = ({ text, clickHandler, color, size, type = 'button' }) => {
+
     return (
         <button
-            className={`flex center border-radius-m bold ${type} ${size}`}
-            onClick={() => clickHandler && clickHandler.call()}
-            type={handleSubmit ? 'submit' : 'button'}
+            className={`flex center border-radius-m bold ${color} ${size}`}
+            onClick={(e) => clickHandler && clickHandler(e)}
+            type={type}
         >
             {text}
         </button>
