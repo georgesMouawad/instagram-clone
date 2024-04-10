@@ -1,90 +1,19 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import Comment from './Comment/Comment';
+
 import { timeAgo } from '../../../core/tools/formatTime';
-import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
+import { usePostInteractionLogic } from './logic';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular, faComment as faCommentRegular } from '@fortawesome/free-regular-svg-icons';
 
 const Post = ({ post }) => {
-    const [userComment, setUserComment] = useState('');
-    const [comments, setComments] = useState([]);
-    const [liked, setLiked] = useState(false);
     const navigate = useNavigate();
-
-    const { caption, username, image, created_at, likes, user_image, user_id } = post;
-
-    useEffect(() => {
-        const checkLiked = async () => {
-            try {
-                const response = await sendRequest(requestMethods.GET, `/like/check?id=${post.id}`);
-                if (response.status !== 200) throw new Error('Error');
-                setLiked(response.data.liked);
-            } catch (error) {}
-        };
-
-        const getComments = async () => {
-            try {
-                const response = await sendRequest(requestMethods.GET, `/comments?id=${post.id}`);
-                if (response.status !== 200) throw new Error('Error');
-                setComments(response.data.comments);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        checkLiked();
-        getComments();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    
-    const handleLike = async () => {
-        setLiked(!liked);
-        liked ? post.likes-- : post.likes++;
-        try {
-            const response = await sendRequest(requestMethods.POST, '/like', { id: post.id });
-            if (response.status !== 200) throw new Error('Error');
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const handleCommentSubmit = async (e) => {
-        e.preventDefault();
-        if (userComment) {
-            try {
-                const response = await sendRequest(requestMethods.POST, '/comments', {
-                    post_id: post.id,
-                    content: userComment,
-                });
-                if (response.status !== 200) throw new Error('Error');
-
-                setComments([...comments, response.data]);
-                setUserComment('');
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    };
-
-    const handleCommentChange = (e) => {
-        setUserComment(e.target.value);
-    };
-
-    const Comment = ({ username, content }) => {
-        return (
-            <div className="flex space-between">
-                <p className="size-m black-text bold">
-                    {username} <span className="light-text regular">{content}</span>
-                </p>
-                {/* <FontAwesomeIcon icon={faXmark} /> */}
-            </div>
-        );
-    };
+    const { liked, comments, userComment, handleLike, handleCommentSubmit, handleCommentChange } =
+        usePostInteractionLogic({ post });
 
     if (post)
         return (
@@ -93,20 +22,23 @@ const Post = ({ post }) => {
                     <div className="post-header-left flex center">
                         <img
                             src={
-                                user_image
-                                    ? `http://127.0.0.1:8000/profile-pictures/${user_image}`
+                                post.user_image
+                                    ? `http://127.0.0.1:8000/profile-pictures/${post.user_image}`
                                     : './images/assets/avatar.png'
                             }
                             alt="avatar"
                         />
-                        <p className="post-username bold size-m black-text" onClick={() => navigate(`/profile?id=${user_id}`)}>
-                            {username} <span className="light-text"> {timeAgo(created_at)}</span>
+                        <p
+                            className="post-username bold size-m black-text"
+                            onClick={() => navigate(`/profile?id=${post.user_id}`)}
+                        >
+                            {post.username} <span className="light-text"> {timeAgo(post.created_at)}</span>
                         </p>
                     </div>
                     <FontAwesomeIcon icon={faEllipsis} />
                 </div>
                 <div className="post-image">
-                    <img src={`http://127.0.0.1:8000/posts/${image}`} alt="post" />
+                    <img src={`http://127.0.0.1:8000/posts/${post.image}`} alt="post" />
                 </div>
                 <div className="post-actions flex size-xl dark-text">
                     <FontAwesomeIcon
@@ -118,13 +50,13 @@ const Post = ({ post }) => {
                 </div>
                 <div className="post-likes">
                     <p className="black-text size-m bold">
-                        {likes}
-                        <span> {likes <= 1 ? 'like' : 'likes'}</span>
+                        {post.likes}
+                        <span> {post.likes <= 1 ? 'like' : 'likes'}</span>
                     </p>
                 </div>
                 <div className="post-caption">
                     <p className="size-m black-text bold">
-                        {username} <span className="light-text regular">{caption}</span>
+                        {post.username} <span className="light-text regular">{post.caption}</span>
                     </p>
                 </div>
                 <div className="post-comments">

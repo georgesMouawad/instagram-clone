@@ -1,103 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Comment from './Comment/Comment';
+import ConfirmationPopup from '../../Elements/ConfirmationPopup/ConfirmationPopup';
+import { usePostInteractionLogic } from '../../Feed/Post/logic';
 
 import { timeAgo } from '../../../core/tools/formatTime';
-import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faXmark, faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 import './index.css';
-import ConfirmationPopup from '../../Elements/ConfirmationPopup/ConfirmationPopup';
 
 const PhotoView = ({ post, setProfileDetails, setPopupState, popupState, userImage }) => {
-    const [liked, setLiked] = useState(false);
-    const [comments, setComments] = useState([]);
-    const [userComment, setUserComment] = useState('');
-
-    useEffect(() => {
-        const checkLiked = async () => {
-            try {
-                const response = await sendRequest(requestMethods.GET, `/like/check?id=${post.id}`);
-                if (response.status !== 200) throw new Error('Error');
-                setLiked(response.data.liked);
-            } catch (error) {}
-        };
-
-        const getComments = async () => {
-            try {
-                const response = await sendRequest(requestMethods.GET, `/comments?id=${post.id}`);
-                if (response.status !== 200) throw new Error('Error');
-                setComments(response.data.comments);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        checkLiked();
-        getComments();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const handleLike = async () => {
-        setLiked(!liked);
-        liked ? post.likes-- : post.likes++;
-        try {
-            const response = await sendRequest(requestMethods.POST, '/like', { id: post.id });
-            if (response.status !== 200) throw new Error('Error');
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const handleCommentSubmit = async (e) => {
-        e.preventDefault();
-        if (userComment) {
-            try {
-                console.log('here');
-                const response = await sendRequest(requestMethods.POST, '/comments', {
-                    post_id: post.id,
-                    content: userComment,
-                });
-                if (response.status !== 200) throw new Error('Error');
-                console.log(response.data);
-                setComments([...comments, response.data]);
-                setUserComment('');
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    };
-
-    const handleCommentChange = (e) => {
-        setUserComment(e.target.value);
-    };
-
-    const handlePostDelete = async () => {
-        try {
-            const response = await sendRequest(requestMethods.DELETE, `/posts?id=${post.id}`);
-            if (response.status !== 200) throw new Error('Error');
-            setPopupState({ ...popupState, showPhotoView: false, showConfirmationPopup: false });
-            setProfileDetails((prevDetails) => ({
-                ...prevDetails,
-                userPosts: prevDetails.userPosts.filter((postelement) => postelement.id !== post.id),
-            }));
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const PostedByImage = ({ userImage }) => {
-        return (
-            <img
-                src={userImage ? `http://127.0.0.1:8000/profile-pictures/${userImage}` : './images/assets/avatar.png'}
-                alt="user-avatar"
-            />
-        );
-    };
+    const {
+        liked,
+        comments,
+        userComment,
+        handleLike,
+        PostedByImage,
+        handlePostDelete,
+        handleCommentSubmit,
+        handleCommentChange,
+    } = usePostInteractionLogic({ post, setPopupState, setProfileDetails, popupState });
 
     if (post)
         return (
