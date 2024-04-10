@@ -16,7 +16,7 @@ export const useAuthenticationLogic = () => {
 
     const navigate = useNavigate();
 
-    const {setCurrentUser} = useUser();
+    const { getCurrentUser } = useUser();
 
     useEffect(() => {
         if (!formData.email.includes('@') && formData.email.length > 0) {
@@ -41,7 +41,7 @@ export const useAuthenticationLogic = () => {
             const response = await sendRequest(requestMethods.POST, '/auth/login', data);
             if (response.status === 200) {
                 localStorage.setItem('token', JSON.stringify(response.data.token));
-                setCurrentUser(response.data.token);
+                getCurrentUser();
                 navigate('/');
                 return;
             } else {
@@ -49,7 +49,7 @@ export const useAuthenticationLogic = () => {
             }
         } catch (error) {
             setError('Wrong email or password');
-            console.log(error.response.data)
+            console.log(error.response.data);
         }
     };
 
@@ -58,7 +58,7 @@ export const useAuthenticationLogic = () => {
             const response = await sendRequest(requestMethods.POST, '/auth/register', formData);
             if (response.status === 201) {
                 localStorage.setItem('token', JSON.stringify(response.data.token));
-                setCurrentUser(response.data.token);
+                getCurrentUser();
                 navigate('/');
                 return;
             } else {

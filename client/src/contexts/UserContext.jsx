@@ -7,21 +7,24 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
 
+    const getCurrentUser = async () => {
+        try {
+            const response = await sendRequest(requestMethods.GET, '/user');
+            response.status === 200 && setCurrentUser(response.data.user);
+        } catch (error) {
+            setCurrentUser(null);
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
         console.log('getcurrentuser invoked');
-        const getCurrentUser = async () => {
-            try {
-                const response = await sendRequest(requestMethods.GET, '/user');
-                response.status === 200 && setCurrentUser(response.data.user);
-            } catch (error) {
-                setCurrentUser(null);
-                console.error(error);
-            }
-        };
         getCurrentUser();
     }, []);
 
-    return <UserContext.Provider value={{ currentUser, setCurrentUser }}>{children}</UserContext.Provider>;
+    return (
+        <UserContext.Provider value={{ currentUser, setCurrentUser, getCurrentUser }}>{children}</UserContext.Provider>
+    );
 };
 
 export const useUser = () => useContext(UserContext);
