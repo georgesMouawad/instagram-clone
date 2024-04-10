@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import { useUser } from '../../../contexts/UserContext';
+import Comment from './Comment/Comment';
+
+import { timeAgo } from '../../../core/tools/formatTime';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,16 +10,11 @@ import { faChevronLeft, faChevronRight, faXmark, faHeart as faHeartSolid } from 
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 
 import './index.css';
-import { timeAgo } from '../../../core/tools/formatTime';
 
-const PhotoView = ({ post, setShowPhotoView }) => {
+const PhotoView = ({ post, setShowPhotoView, userImage }) => {
     const [liked, setLiked] = useState(false);
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState('');
-
-    const { currentUser } = useUser();
-
-    console.log(post);
 
     useEffect(() => {
         const checkLiked = async () => {
@@ -78,34 +75,6 @@ const PhotoView = ({ post, setShowPhotoView }) => {
         setUserComment(e.target.value);
     };
 
-    const Comment = ({ comment }) => {
-        return (
-            <div className="comment-view flex">
-                <div className="comment-avatar flex center">
-                    <img
-                        src={
-                            comment.user_image
-                                ? `http://127.0.0.1:8000/profile-pictures/${comment.user_image}`
-                                : './images/assets/avatar.png'
-                        }
-                        alt="avatar"
-                    />
-                </div>
-                <div className="comment-view-text flex column">
-                    <div className="comment-top flex">
-                        <p className="comment-username bold size-m">
-                            {comment.username}
-                            <span className="comment-text size-m regular"> {comment.content}</span>{' '}
-                        </p>
-                    </div>
-                    <div className="comment-info size-s">
-                        <p className="light-text">{timeAgo(comment.created_at)}</p>
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
     if (post)
         return (
             <div className="photo-view-container black-bg-trsp flex space-between">
@@ -124,8 +93,8 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                             <div className="comments-view-user flex align-center bold size-m">
                                 <img
                                     src={
-                                        currentUser.image
-                                            ? `http://127.0.0.1:8000/profile-pictures/${currentUser.image}`
+                                        userImage
+                                            ? `http://127.0.0.1:8000/profile-pictures/${userImage}`
                                             : './images/assets/avatar.png'
                                     }
                                     alt="user-avatar"
@@ -135,8 +104,8 @@ const PhotoView = ({ post, setShowPhotoView }) => {
                             <div className="comments-view-caption size-m flex align-center">
                                 <img
                                     src={
-                                        currentUser.image
-                                            ? `http://127.0.0.1:8000/profile-pictures/${currentUser.image}`
+                                        userImage
+                                            ? `http://127.0.0.1:8000/profile-pictures/${userImage}`
                                             : './images/assets/avatar.png'
                                     }
                                     alt="user-avatar"

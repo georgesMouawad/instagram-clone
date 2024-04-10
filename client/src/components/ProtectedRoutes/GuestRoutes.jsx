@@ -3,15 +3,15 @@ import { useEffect } from 'react';
 
 import { useUser } from '../../contexts/UserContext';
 
-const AuthenticatedRoutes = ({ children }) => {
+const GuestRoutes = ({ children }) => {
     const { currentUser } = useUser();
     const navigate = useNavigate();
 
     const validate = () => {
-        if (!currentUser) {
-            navigate('/auth');
+        if (currentUser) {
+            navigate('/');
         } else {
-            console.log('User is Logged In');
+            console.log('User is Guest');
         }
     };
 
@@ -22,4 +22,4 @@ const AuthenticatedRoutes = ({ children }) => {
     return children;
 };
 
-export default AuthenticatedRoutes;
+export default GuestRoutes;

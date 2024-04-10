@@ -58,11 +58,13 @@ const Profile = () => {
             }
         };
 
-        getUserPosts();
-        getUserInfo();
-        checkIfFollowed();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isEditing]);
+        if (currentUser) {
+            getUserPosts();
+            getUserInfo();
+            checkIfFollowed();
+        }
+
+    }, [isEditing, searchParams, currentUser]);
 
     useEffect(() => {
         setIsCurrentUserProfile(currentUser && currentUser.id === parseInt(searchParams.get('id')));
@@ -96,7 +98,7 @@ const Profile = () => {
         );
     };
 
-    if (currentUser)
+    if (currentUser && userInfo)
         return (
             <>
                 <LeftBar currentUser={currentUser} posts={userPosts} setPosts={setUserPosts} />
@@ -162,7 +164,9 @@ const Profile = () => {
                     </div>
                 </div>
                 {isEditing && <EditProfileForm userInfo={userInfo} setIsEditing={setIsEditing} />}
-                {showPhotoView && <PhotoView setShowPhotoView={setShowPhotoView} post={selectedPost} />}
+                {showPhotoView && (
+                    <PhotoView setShowPhotoView={setShowPhotoView} post={selectedPost} userImage={userInfo.image} />
+                )}
             </>
         );
 };
