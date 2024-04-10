@@ -1,148 +1,46 @@
 @media screen and (max-width:1344px) {
 
-    .nav-elements,
-    .rides-container,
-    .ride-card {
-        width: 100%;
-        border-radius: 0;
+    .left-bar-main {
+        width: auto;
+        padding: 32px;
+
     }
 
-    .footer {
-        padding: 0 32px;
+    .left-bar-links p,
+    .left-bar-logo img {
+        display: none;
     }
 
+    .profile-main {
+        margin: 0 96px;
+    }
 }
 
 @media screen and (max-width:944px) {
-    .footer {
-        flex-direction: column;
-        justify-content: center;
-        gap: 24px;
+    .feed-main {
+        margin-left: 88px;
     }
 
-    .nav-list {
-        gap: unset;
-    }
-
-    .ride-card {
-        width: 100%;
-        height: 120px;
-        margin-bottom: 24px;
-    }
-
-    .name-rating,
-    .price-select {
-        width: unset;
+    .suggested-card {
         flex-direction: column;
     }
 
-    .name-rating h3 {
-        width: 100%;
+    .post-container {
+        width: 300px;
     }
-
-    .arrow {
-        width: 10%;
-    }
-
-    .arrow img {
-        width: 100%;
-    }
-
-    .ad {
-        padding: 12px;
-    }
-
-    .ad-text h1 {
-        font-size: 24px;
-    }
-
-    .ad-text h2 {
-        font-size: 20px;
-    }
-
-    .ad-text p {
-        font-size: 16px;
-    }
-
 
 }
 
 @media screen and (max-width:600px) {
-    .navbar {
-        padding: 32px;
+    .feed-main {
+        margin: 0 88px;
     }
 
-    .nav-link {
+    .right-bar {
         display: none;
     }
 
-    .welcome-home h2 {
-        font-size: 24px;
-    }
-
-    .welcome-home h1 {
-        font-size: 36px;
-    }
-
-    .home-search input {
-        width: 90%;
-    }
-
-    .section-header {
-        padding: 32px;
-    }
-
-    .header-text h1 {
-        font-size: 28px;
-    }
-
-
-    .header-text h3 {
-        font-size: 16px;
-    }
-
-
-    .ride-card h3,
-    .ride-card p {
-        font-size: smaller;
-    }
-
-    .ride-card {
-        padding: 12px;
-    }
-
-    .recommendations {
-        padding: 64px 12px;
-        text-align: center;
-    }
-
-    .ad {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .ad-text {
-        margin-bottom: 12px;
-    }
-
-    .ad img {
-        margin-top: 12px;
-    }
-
-    .welcome-text h1 {
-        font-size: 36px;
-    }
-
-    .welcome-text p {
-        font-size: 20px;
-    }
-
-    .welcome-btns {
-        flex-direction: column;
-    }
-
-    .footer {
+    .left-bar-main {
         padding: 16px;
-        gap: 16px;
     }
 }

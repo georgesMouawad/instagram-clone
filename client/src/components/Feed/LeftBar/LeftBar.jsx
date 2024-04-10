@@ -38,7 +38,7 @@ const LeftBar = ({ posts, setPosts, setProfileDetails, switchHandler }) => {
                                 <p
                                     onClick={() => {
                                         navigate('/');
-                                        switchHandler(false);
+                                        switchHandler && switchHandler(false);
                                     }}
                                 >
                                     Home
@@ -49,7 +49,7 @@ const LeftBar = ({ posts, setPosts, setProfileDetails, switchHandler }) => {
                                 <p
                                     onClick={() => {
                                         navigate('/');
-                                        switchHandler(true);
+                                        switchHandler && switchHandler(true);
                                     }}
                                 >
                                     Explore
