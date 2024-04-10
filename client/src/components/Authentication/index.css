@@ -1,5 +1,5 @@
 .form-component {
-  height: 100vh;
+  height: calc(100vh - (48px * 2 + 43px));
   width: 100%;
   gap: 32px;
 }
@@ -18,25 +18,21 @@
 
 .logo-form img {
   height: 50px;
-  margin: 48px;
+  margin-top: 48px;
+  margin-bottom: 42px;
   cursor: pointer;
 }
 
 .validation-display {
   height: auto;
-  color: #980511;
-}
-
-.validation-display > p {
-  margin-top: 0px;
-  margin-bottom: 16px;
+  color: #fa5252;
 }
 
 form {
   width: 85%;
 }
 
-form > div {
+form>div {
   width: 100%;
 }
 
@@ -44,8 +40,8 @@ form > div {
   position: relative;
 }
 
-.field {
-  width: 100%;
+.field, .container button {
+  width: 90%;
 }
 
 .field input {
@@ -72,8 +68,14 @@ form > div {
 .apps {
   gap: 8px;
 }
+
 .apps img {
   max-width: 130px;
-  height: 40px;;
+  height: 40px;
+  ;
   border-radius: 8px;
+}
+
+.register-link:hover {
+  cursor: pointer;
 }

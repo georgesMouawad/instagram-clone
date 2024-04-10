@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import AuthenticatedRoutes from './components/ProtectedRoutes/AuthenticatedRoutes';
 import Authentication from './components/Authentication/Authentication';
 import Profile from './components/Profile/Profile';
 import Feed from './components/Feed/Feed';
+import Footer from './components/Elements/Footer/Footer';
 
 import './styles/colors.css';
 import './styles/utilities.css';
@@ -23,6 +23,7 @@ const App = () => {
                     <Route path="/profile" element={<Profile />} />
                 </Routes>
             </AuthenticatedRoutes>
+            <Footer/>
         </>
     );
 };

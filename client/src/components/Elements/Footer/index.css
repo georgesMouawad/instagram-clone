@@ -1,0 +1,7 @@
+.footer-container {
+    gap: 12px;
+    margin: 48px 0;
+}
+.footer-main, .footer-bottom {
+    gap: 16px;
+}
