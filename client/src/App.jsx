@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
+import AuthenticatedRoutes from './components/ProtectedRoutes/AuthenticatedRoutes';
 import Authentication from './components/Authentication/Authentication';
 import Profile from './components/Profile/Profile';
 import Feed from './components/Feed/Feed';
@@ -12,11 +13,17 @@ import './App.css';
 
 const App = () => {
     return (
-        <Routes>
-            <Route path="/" element={<Feed />} />
-            <Route path="/auth" element={<Authentication />} />
-            <Route path="/profile" element={<Profile />} />
-        </Routes>
+        <>
+            <Routes>
+                <Route path="/auth" element={<Authentication />} />
+            </Routes>
+            <AuthenticatedRoutes>
+                <Routes>
+                    <Route path="/" element={<Feed />} />
+                    <Route path="/profile" element={<Profile />} />
+                </Routes>
+            </AuthenticatedRoutes>
+        </>
     );
 };
 

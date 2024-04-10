@@ -1,21 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { sendRequest, requestMethods } from '../../core/tools/apiRequest';
 import { useEffect } from 'react';
 
+import { useUser } from '../../contexts/UserContext';
+
 const AuthenticatedRoutes = ({ children }) => {
+    const { currentUser, setCurrentUser } = useUser();
     const navigate = useNavigate();
 
     const validate = async () => {
-        try {
-            const response = await sendRequest(requestMethods.GET, '/users/getuserrole');
-            if (response.data.role !== 0) {
-                console.log('User is Logged In');
-            } else {
-                navigate('/');
-            }
-        } catch (error) {
-            console.log(error);
-            navigate('/');
+        if (!currentUser) {
+            navigate('/auth');
+            return;
+        } else {
+            console.log('User is Logged In');
         }
     };
 
