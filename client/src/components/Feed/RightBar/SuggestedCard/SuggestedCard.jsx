@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { requestMethods, sendRequest } from '../../../../core/tools/apiRequest';
 
 const SuggestedCard = ({ user }) => {
     const [isFollowed, setIsFollowed] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleUserFollow = async () => {
         try {
@@ -28,7 +31,7 @@ const SuggestedCard = ({ user }) => {
                         alt="avatar"
                     />
                     <div className="suggested-card-text">
-                        <p className="black-text size-m bold">{user.username}</p>
+                        <p className="black-text size-m bold" onClick={() => navigate(`/profile?id=${user.id}`)}>{user.username}</p>
                         <p className="light-text size-m">{user.name}</p>
                     </div>
                 </div>

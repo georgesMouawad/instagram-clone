@@ -171,6 +171,11 @@
     gap: 12px;
 }
 
+.suggested-card-text > p:first-child:hover {
+    cursor: pointer;
+    color: #737373;
+}
+
 .follow-btn {
     padding: 4px 8px;
 }
