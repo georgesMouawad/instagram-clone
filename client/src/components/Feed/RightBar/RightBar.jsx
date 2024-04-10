@@ -1,35 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
-import { useUser } from '../../../contexts/UserContext';
-import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
+import { useLightBarLogic } from './logic';
 
 import SuggestedCard from './SuggestedCard/SuggestedCard';
 
 const RightBar = () => {
-    const [suggestedUsers, setSuggestedUsers] = useState([]);
     
-    const { currentUser } = useUser();
-
-    const navigate = useNavigate();
-
-    console.log('right bar')
-
-    useEffect(() => {
-        const getSuggestedUsers = async () => {
-            try {
-                const response = await sendRequest(requestMethods.GET, '/follow/recommended');
-                if (response.status === 200) {
-                    console.log(response.data.users);
-                    setSuggestedUsers(response.data.users);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        getSuggestedUsers();
-    }, []);
+    const { currentUser, suggestedUsers, navigate } = useLightBarLogic();
 
     if(currentUser) return (
         <div className="right-bar-main">

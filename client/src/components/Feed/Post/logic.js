@@ -45,7 +45,6 @@ export const usePostInteractionLogic = ({ post, setPopupState, setProfileDetails
         e.preventDefault();
         if (userComment) {
             try {
-                console.log('here');
                 const response = await sendRequest(requestMethods.POST, '/comments', {
                     post_id: post.id,
                     content: userComment,
