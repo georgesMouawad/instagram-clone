@@ -10,13 +10,13 @@ import { faCompass, faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { faHouse, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
-const LeftBar = ({ posts, setPosts }) => {
+const LeftBar = ({ posts, setPosts, setProfileDetails}) => {
     const [showPopup, setShowPopup] = useState(false);
     const [image, setImage] = useState(null);
     const [imageData, setImageData] = useState(null);
     const [caption, setCaption] = useState('');
 
-    const {setCurrentUser, currentUser} = useUser();
+    const { setCurrentUser, currentUser } = useUser();
 
     const navigate = useNavigate();
 
@@ -61,7 +61,9 @@ const LeftBar = ({ posts, setPosts }) => {
             });
             if (response.status !== 201) throw new Error('Error');
             setShowPopup(false);
-            setPosts([response.data.post, ...posts]);
+            setProfileDetails && setProfileDetails((prevDetails) => ({ ...prevDetails, userPosts: [response.data.post, ...prevDetails.userPosts] }));
+            setPosts && setPosts([response.data.post, ...posts]);
+
         } catch (error) {
             console.log(error);
         }

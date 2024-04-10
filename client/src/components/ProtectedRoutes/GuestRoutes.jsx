@@ -6,9 +6,10 @@ import { useUser } from '../../contexts/UserContext';
 const GuestRoutes = ({ children }) => {
     const { currentUser } = useUser();
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
     const validate = () => {
-        if (currentUser) {
+        if (currentUser || token) {
             navigate('/');
         } else {
             console.log('User is Guest');

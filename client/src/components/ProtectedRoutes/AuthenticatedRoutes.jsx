@@ -6,9 +6,10 @@ import { useUser } from '../../contexts/UserContext';
 const AuthenticatedRoutes = ({ children }) => {
     const { currentUser } = useUser();
     const navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
     const validate = () => {
-        if (!currentUser) {
+        if (!currentUser && !token) {
             navigate('/auth');
         } else {
             console.log('User is Logged In');

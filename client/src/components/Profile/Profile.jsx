@@ -22,11 +22,15 @@ const Profile = () => {
         showPhotoView: false,
     });
     const [selectedPost, setSelectedPost] = useState({});
-    const [isFollowed, setIsFollowed] = useState(false);
-    const [userInfo, setUserInfo] = useState({});
-    const [userPosts, setUserPosts] = useState([]);
+    const [profileDetails, setProfileDetails] = useState({
+        userInfo: {},
+        userPosts: {},
+        isFollowed: false,
+    });
+    // const [isFollowed, setIsFollowed] = useState(false);
+    // const [userInfo, setUserInfo] = useState({});
+    // const [userPosts, setUserPosts] = useState([]);
     const [searchParams] = useSearchParams();
-
     const { currentUser } = useUser();
 
     useEffect(() => {
@@ -34,8 +38,8 @@ const Profile = () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/posts?user_id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
-                console.log(response.data.posts);
-                setUserPosts(response.data.posts.sort((a, b) => (a.created_at < b.created_at ? 1 : -1)));
+                const sortedResponse = response.data.posts.sort((a, b) => (a.created_at < b.created_at ? 1 : -1));
+                setProfileDetails((prevDetails) => ({ ...prevDetails, userPosts: sortedResponse }));
             } catch (error) {
                 console.log(error);
             }
@@ -44,8 +48,7 @@ const Profile = () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/users?id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
-                console.log(response.data.user);
-                setUserInfo(response.data.user);
+                setProfileDetails((prevDetails) => ({ ...prevDetails, userInfo: response.data.user }));
             } catch (error) {
                 console.log(error);
             }
@@ -54,27 +57,26 @@ const Profile = () => {
             try {
                 const response = await sendRequest(requestMethods.GET, `/follow/check?id=${searchParams.get('id')}`);
                 if (response.status !== 200) throw new Error('Error');
-                setIsFollowed(response.data.following);
+                setProfileDetails((prevDetails) => ({ ...prevDetails, isFollowed: response.data.following }));
             } catch (error) {
                 console.log(error);
             }
         };
 
         if (currentUser) {
+            setIsCurrentUserProfile(currentUser && currentUser.id === parseInt(searchParams.get('id')));
+            !isCurrentUserProfile && checkIfFollowed();
             getUserPosts();
             getUserInfo();
-            checkIfFollowed();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [popupState.isEditing, searchParams, currentUser]);
 
-    useEffect(() => {
-        setIsCurrentUserProfile(currentUser && currentUser.id === parseInt(searchParams.get('id')));
-    }, [currentUser, searchParams]);
-
+    console.log(profileDetails);
     const handleUserFollow = async () => {
         try {
-            setIsFollowed(!isFollowed);
-            const response = await sendRequest(requestMethods.POST, `/follow`, { id: userInfo.id });
+            setProfileDetails({ ...profileDetails, isFollowed: !profileDetails.isFollowed });
+            const response = await sendRequest(requestMethods.POST, `/follow`, { id: profileDetails.userInfo.id });
             if (response.status !== 200) throw new Error('Error');
         } catch (error) {
             console.log(error);
@@ -99,17 +101,20 @@ const Profile = () => {
         );
     };
 
-    if (currentUser && userInfo)
+    if (currentUser && profileDetails.userInfo)
         return (
             <>
-                <LeftBar currentUser={currentUser} posts={userPosts} setPosts={setUserPosts} />
+                <LeftBar
+                    setProfileDetails={setProfileDetails}
+                    profileDetails={profileDetails}
+                />
                 <div className="profile-main flex column">
                     <div className="profile-header flex center">
                         <div className="profile-image">
                             <img
                                 src={
-                                    userInfo.image
-                                        ? `http://127.0.0.1:8000/profile-pictures/${userInfo.image}`
+                                    profileDetails.userInfo.image
+                                        ? `http://127.0.0.1:8000/profile-pictures/${profileDetails.userInfo.image}`
                                         : './images/assets/avatar.png'
                                 }
                                 alt="avatar"
@@ -117,7 +122,7 @@ const Profile = () => {
                         </div>
                         <div className="profile-info flex column">
                             <div className="profile-info-top flex space-between">
-                                <p className="size-xl">{userInfo.username}</p>
+                                <p className="size-xl">{profileDetails.userInfo.username}</p>
                                 {isCurrentUserProfile ? (
                                     <Button
                                         color={'secondary-btn'}
@@ -129,27 +134,27 @@ const Profile = () => {
                                     />
                                 ) : (
                                     <Button
-                                        color={isFollowed ? 'secondary-btn' : 'primary-btn'}
+                                        color={profileDetails.isFollowed ? 'secondary-btn' : 'primary-btn'}
                                         size={'btn-s'}
                                         clickHandler={handleUserFollow}
-                                        text={isFollowed ? 'Following' : 'Follow'}
+                                        text={profileDetails.isFollowed ? 'Following' : 'Follow'}
                                     />
                                 )}
                             </div>
                             <div className="profile-info-mid flex">
                                 <p className="size-l">
-                                    <strong>{userInfo.posts}</strong> posts
+                                    <strong>{profileDetails.userInfo.posts}</strong> posts
                                 </p>
                                 <p className="size-l">
-                                    <strong>{userInfo.followers}</strong> followers
+                                    <strong>{profileDetails.userInfo.followers}</strong> followers
                                 </p>
                                 <p className="size-l">
-                                    <strong>{userInfo.following}</strong> following
+                                    <strong>{profileDetails.userInfo.following}</strong> following
                                 </p>
                             </div>
                             <div className="profile-info-bottom">
-                                <p className="size-m bold">{userInfo.name}</p>
-                                <p className="size-m">{userInfo.bio}</p>
+                                <p className="size-m bold">{profileDetails.userInfo.name}</p>
+                                <p className="size-m">{profileDetails.userInfo.bio}</p>
                             </div>
                         </div>
                     </div>
@@ -159,14 +164,25 @@ const Profile = () => {
                     </div>
 
                     <div className="profile-posts flex wrap">
-                        {userPosts &&
-                            userPosts.length > 0 &&
-                            userPosts.map((post) => <ProfilePost post={post} key={post.id} />)}
+                        {profileDetails.userPosts &&
+                            profileDetails.userPosts.length > 0 &&
+                            profileDetails.userPosts.map((post) => <ProfilePost post={post} key={post.id} />)}
                     </div>
                 </div>
-                {popupState.isEditing && <EditProfileForm userInfo={userInfo} setPopupState={setPopupState} popupState={popupState} />}
+                {popupState.isEditing && (
+                    <EditProfileForm
+                        userInfo={profileDetails.userInfo}
+                        setPopupState={setPopupState}
+                        popupState={popupState}
+                    />
+                )}
                 {popupState.showPhotoView && (
-                    <PhotoView setPopupState={setPopupState} popupState={popupState} post={selectedPost} userImage={userInfo.image} />
+                    <PhotoView
+                        setPopupState={setPopupState}
+                        popupState={popupState}
+                        post={selectedPost}
+                        userImage={profileDetails.userInfo.image}
+                    />
                 )}
             </>
         );

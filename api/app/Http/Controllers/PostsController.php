@@ -19,7 +19,7 @@ class PostsController extends Controller
 
             $following = $user->following()->pluck('users.id');
 
-            $posts = Post::whereIn('user_id', $following)->with('user:id,username,image', 'likes')->get();
+            $posts = Post::whereIn('user_id', $following)->orWhere('user_id', $user->id)->with('user:id,username,image', 'likes')->get();
 
             $posts = $posts->map(function ($post) {
                 return [
