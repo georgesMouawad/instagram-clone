@@ -15,12 +15,12 @@ export const useLeftBarLogic = ({ posts, setPosts, setProfileDetails }) => {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
+        navigate('/auth');
         try {
             const response = await sendRequest(requestMethods.POST, '/auth/logout', null);
             if (response.status === 200) {
-                setCurrentUser(null);
                 localStorage.clear();
-                navigate('/auth');
+                setCurrentUser(null);
                 return;
             }
         } catch (error) {

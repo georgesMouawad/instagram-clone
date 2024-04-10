@@ -21,8 +21,8 @@ const App = () => {
             </GuestRoutes>
             <AuthenticatedRoutes>
                 <Routes>
-                    <Route path="/" element={<Feed />} />
                     <Route path="/profile" element={<Profile />} />
+                    <Route path="/" element={<Feed />} />
                 </Routes>
             </AuthenticatedRoutes>
         </>

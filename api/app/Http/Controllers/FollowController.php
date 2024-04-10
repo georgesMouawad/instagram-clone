@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Follower;
 use Illuminate\Http\Request;
-use App\Models\User;
 
 class FollowController extends Controller
 {
@@ -84,7 +84,6 @@ class FollowController extends Controller
                 'message' => 'User unfollowed'
             ]);
         }
-
 
         $follower = new Follower();
         $follower->user_id = $user_id;

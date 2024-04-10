@@ -18,7 +18,6 @@ export const UserProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        console.log('getcurrentuser invoked');
         getCurrentUser();
     }, []);
 
