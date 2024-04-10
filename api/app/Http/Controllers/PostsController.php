@@ -12,8 +12,28 @@ class PostsController extends Controller
     {
         $post_id = $request->query('id');
         $user_id = $request->query('user_id');
+        $get_all = $request->query('all');
 
-        if (!$post_id && !$user_id) {
+        if ($get_all) {
+
+            $posts = Post::with('user:id,username', 'likes')->get();
+
+            $posts = $posts->map(function ($post) {
+                return [
+                    'id' => $post->id,
+                    'image' => $post->image,
+                    'caption' => $post->caption,
+                    'created_at' => $post->created_at,
+                    'user_id' => $post->user_id,
+                    'username' => $post->user->username,
+                    'likes' => $post->likes->count(),
+                ];
+            });
+
+            return response()->json([
+                'posts' => $posts
+            ]);
+        } elseif (!$post_id && !$user_id && !$get_all) {
 
             $user = User::find(auth()->user()->id);
 
@@ -104,9 +124,10 @@ class PostsController extends Controller
 
     public function deletePost(Request $request)
     {
+        $user_id = auth()->user()->id;
         $post_id = $request->query('id');
 
-        $post = Post::find($post_id);
+        $post = Post::where('user_id', $user_id)->find($post_id);
 
         if (!$post) {
             return response()->json([

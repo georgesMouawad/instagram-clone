@@ -25,6 +25,7 @@ class CommentsController extends Controller
             return [
                 'id' => $comment->id,
                 'content' => $comment->content,
+                'user_id' => $comment->user_id,
                 'username' => $comment->user->username,
                 'user_image' => $comment->user->image,
                 'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
@@ -58,9 +59,37 @@ class CommentsController extends Controller
         return response()->json([
             'id' => $comment->id,
             'content' => $comment->content,
+            'user_id' => $comment->user_id,
             'username' => $comment->user->username,
             'user_image' => $comment->user->image,
             'created_at' => $comment->created_at->format('Y-m-d H:i:s'),
+        ]);
+    }
+
+    public function deleteComment(Request $request)
+    {
+        $user_id = $request->user()->id;
+
+        $comment_id = $request->input('id');
+
+        $comment = Comment::where('user_id', $user_id)->find($comment_id);
+
+        if (!$comment) {
+            return response()->json([
+                'error' => 'Comment not found'
+            ], 404);
+        }
+
+        if ($comment->user_id !== $request->user()->id) {
+            return response()->json([
+                'error' => 'Unauthorized'
+            ], 401);
+        }
+
+        $comment->delete();
+
+        return response()->json([
+            'message' => 'Comment deleted'
         ]);
     }
 }

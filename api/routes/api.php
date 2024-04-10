@@ -44,4 +44,5 @@ Route::middleware([AuthMiddleware::class])->group(function () {
 
     Route::get('comments', [CommentsController::class, 'getComments']);
     Route::post('comments', [CommentsController::class, 'addComment']);
+    Route::delete('comments', [CommentsController::class, 'deleteComment']);
 });

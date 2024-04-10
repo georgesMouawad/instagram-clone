@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCompass, faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import { faHouse, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
-const LeftBar = ({ posts, setPosts, setProfileDetails }) => {
+const LeftBar = ({ posts, setPosts, setProfileDetails, switchHandler }) => {
     const {
         image,
         caption,
@@ -35,11 +35,25 @@ const LeftBar = ({ posts, setPosts, setProfileDetails }) => {
                         <div className="left-bar-links flex column">
                             <div className="left-bar-home flex">
                                 <FontAwesomeIcon icon={faHouse} className="left-bar-icon" />
-                                <p onClick={() => navigate('/')}>Home</p>
+                                <p
+                                    onClick={() => {
+                                        navigate('/');
+                                        switchHandler(false);
+                                    }}
+                                >
+                                    Home
+                                </p>
                             </div>
                             <div className="left-bar-explore flex">
                                 <FontAwesomeIcon icon={faCompass} className="left-bar-icon" />
-                                <p onClick={() => navigate('/')}>Explore</p>
+                                <p
+                                    onClick={() => {
+                                        navigate('/');
+                                        switchHandler(true);
+                                    }}
+                                >
+                                    Explore
+                                </p>
                             </div>
                             <div className="left-bar-create flex">
                                 <FontAwesomeIcon icon={faSquarePlus} className="left-bar-icon" />

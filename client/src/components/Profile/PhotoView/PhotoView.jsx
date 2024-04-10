@@ -2,6 +2,7 @@ import React from 'react';
 
 import Comment from './Comment/Comment';
 import ConfirmationPopup from '../../Elements/ConfirmationPopup/ConfirmationPopup';
+
 import { usePostInteractionLogic } from '../../Feed/Post/logic';
 
 import { timeAgo } from '../../../core/tools/formatTime';
@@ -16,12 +17,14 @@ const PhotoView = ({ post, setProfileDetails, setPopupState, popupState, userIma
     const {
         liked,
         comments,
+        currentUser,
         userComment,
         handleLike,
         PostedByImage,
         handlePostDelete,
         handleCommentSubmit,
         handleCommentChange,
+        handleCommentDelete,
     } = usePostInteractionLogic({ post, setPopupState, setProfileDetails, popupState });
 
     if (post)
@@ -48,11 +51,11 @@ const PhotoView = ({ post, setProfileDetails, setPopupState, popupState, userIma
                                         <PostedByImage userImage={userImage} />
                                         <p>{post.username}</p>
                                     </div>
-                                    <FontAwesomeIcon
+                                    {currentUser.id === post.user_id && <FontAwesomeIcon
                                         icon={faTrashCan}
                                         onClick={() => setPopupState({ ...popupState, showConfirmationPopup: true })}
                                         className="delete-post-btn light-text"
-                                    />
+                                    />}
                                 </div>
                                 <div className="comments-view-caption size-m flex align-center">
                                     <PostedByImage userImage={userImage} />
@@ -62,11 +65,10 @@ const PhotoView = ({ post, setProfileDetails, setPopupState, popupState, userIma
                                 </div>
                             </div>
                             {comments && comments.length > 0 ? (
-                                comments.map((comment) => <Comment key={comment.id} comment={comment} />)
+                                comments.map((comment) => <Comment key={comment.id} comment={comment} handleCommentDelete={handleCommentDelete} currentUser={currentUser} />)
                             ) : (
                                 <p className="comment-not-found size-m black-text">No comments yet</p>
                             )}
-
                             <div className="photo-view-bottom">
                                 <div className="photo-view-actions size-xl">
                                     <FontAwesomeIcon

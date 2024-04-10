@@ -8,14 +8,14 @@ import Main from './Main/Main';
 
 import './index.css';
 
-const Feed = () => {
+const Explore = () => {
 
-    const { currentUser, posts, setPosts, switchHandler } = useFeedLogic();
+    const { currentUser, posts, setPosts } = useFeedLogic();
 
     return (
         <div className='feed-all flex'>
             <div className="sidebar">
-                <LeftBar currentUser={currentUser} posts={posts} setPosts={setPosts} switchHandler={switchHandler}  />
+                <LeftBar currentUser={currentUser} posts={posts} setPosts={setPosts} />
             </div>
             <div className="feed-main flex">
                 <Main currentUser={currentUser} posts={posts} />
@@ -27,4 +27,4 @@ const Feed = () => {
     );
 };
 
-export default Feed;
+export default Explore;

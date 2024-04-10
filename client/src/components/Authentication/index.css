@@ -23,6 +23,13 @@
   cursor: pointer;
 }
 
+.left-image img {
+  padding: 24px;
+  max-height: 552px;
+  object-fit: cover;
+
+}
+
 .validation-display {
   height: auto;
   color: #fa5252;

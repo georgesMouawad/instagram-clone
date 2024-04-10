@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useUser } from '../../../contexts/UserContext';
 import { requestMethods, sendRequest } from '../../../core/tools/apiRequest';
 
 export const usePostInteractionLogic = ({ post, setPopupState, setProfileDetails, popupState }) => {
     const [liked, setLiked] = useState(false);
     const [comments, setComments] = useState([]);
     const [userComment, setUserComment] = useState('');
+
+    const {currentUser} = useUser();
 
     useEffect(() => {
         const checkLiked = async () => {
@@ -62,6 +65,16 @@ export const usePostInteractionLogic = ({ post, setPopupState, setProfileDetails
         setUserComment(e.target.value);
     };
 
+    const handleCommentDelete = async (commentId) => {
+        try {
+            const response = await sendRequest(requestMethods.DELETE, `/comments?id=${commentId}`);
+            if (response.status !== 200) throw new Error('Error');
+            setComments([...comments.filter((comment) => comment.id !== commentId)]);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const handlePostDelete = async () => {
         try {
             const response = await sendRequest(requestMethods.DELETE, `/posts?id=${post.id}`);
@@ -86,13 +99,15 @@ export const usePostInteractionLogic = ({ post, setPopupState, setProfileDetails
     };
 
     return {
+        liked,
+        comments,
+        currentUser,
+        userComment,
         handleLike,
+        PostedByImage,
+        handlePostDelete,
         handleCommentSubmit,
         handleCommentChange,
-        handlePostDelete,
-        PostedByImage,
-        comments,
-        liked,
-        userComment,
+        handleCommentDelete,
     };
 };

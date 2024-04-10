@@ -28,7 +28,7 @@ const Profile = () => {
     if (currentUser && profileDetails.userInfo)
         return (
             <>
-                <LeftBar setProfileDetails={setProfileDetails} profileDetails={profileDetails} />
+                <LeftBar setProfileDetails={setProfileDetails} profileDetails={profileDetails}/>
                 <div className="profile-main flex column">
                     <div className="profile-header flex center">
                         <div className="profile-image">
