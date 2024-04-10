@@ -12,7 +12,23 @@
     }
 
     .profile-main {
-        margin: 0 96px;
+        margin: 0 16px 0 96px;
+    }
+
+    .profile-posts {
+        width: 100%;
+        height: unset;
+        align-items: center;
+    }
+    .profile-post {
+        width: 100%;
+        height: unset;
+    }
+
+    .profile-posts-header {
+        width: 100%;
+        justify-content: center;
+    
     }
 }
 
@@ -42,5 +58,18 @@
 
     .left-bar-main {
         padding: 16px;
+    }
+
+    .profile-header {
+        gap: 16px;
+    }
+
+    .profile-header img {
+        width: 128px;
+        height: 128px;
+    }
+
+    .profile-main {
+        margin: 0 16px 0 64px;
     }
 }
