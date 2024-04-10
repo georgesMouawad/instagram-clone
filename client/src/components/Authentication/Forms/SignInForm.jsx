@@ -1,3 +1,5 @@
+import React from 'react';
+
 import '../index.css';
 
 const SignInForm = ({ switchHandler, handleLogin, error, setFormData, formdata }) => {
@@ -37,20 +39,20 @@ const SignInForm = ({ switchHandler, handleLogin, error, setFormData, formdata }
                         required
                     />
                 </div>
-                <div className="flex center validation-display">{error && <p>{error}</p>}</div>
+                {error && <div className="flex center validation-display size-m"><p>{error}</p></div>}
                 <button
-                    className="input-btn-lg primary-btn size-l box-shadow border-radius-m"
+                    className="input-btn-lg primary-btn size-l box-shadow border-radius"
                     type="submit"
                 >
                     Log in
                 </button>
             </form>
-            <p>
+            {/* <p>
                 Don't have an account'?{' '}
                 <span className="register-link primary-text" onClick={() => switchHandler(false)}>
                     Register Now
                 </span>
-            </p>
+            </p> */}
         </>
     );
 };

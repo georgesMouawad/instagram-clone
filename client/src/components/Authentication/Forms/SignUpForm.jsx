@@ -63,12 +63,12 @@ const SignupForm = ({ switchHandler, handleSignup, error, formData, setFormData 
                     Sign Up
                 </button>
             </form>
-            <p>
+            {/* <p>
                 Have an Account?{' '}
                 <span className="login-link primary-text" onClick={() => switchHandler(true)}>
                     Sign In
                 </span>
-            </p>
+            </p> */}
         </>
     );
 };

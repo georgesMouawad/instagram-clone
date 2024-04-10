@@ -4,11 +4,6 @@
   gap: 32px;
 }
 
-.logo-form img {
-  height: 50px;
-  margin: 48px;
-}
-
 .container {
   max-width: 30%;
   min-height: 600px;
@@ -16,21 +11,25 @@
   padding: 24px;
 }
 
-.container p {
-  font-size: 16px;
-  text-align: center;
-  margin-top: 16px;
+.logo-form {
+  width: 100%;
+  height: auto;
+}
+
+.logo-form img {
+  height: 50px;
+  margin: 48px;
+  cursor: pointer;
 }
 
 .validation-display {
-  height: 48px;
+  height: auto;
   color: #980511;
 }
 
 .validation-display > p {
   margin-top: 0px;
   margin-bottom: 16px;
-  font-size: 16px;
 }
 
 form {
@@ -45,55 +44,36 @@ form > div {
   position: relative;
 }
 
-.logo-form > img {
-  cursor: pointer;
-}
-
 .field {
   width: 100%;
 }
 
 .field input {
   padding: 0 12px;
-  margin-bottom: 4px;
-  margin-top: 8px;
+  margin: 6px 0;
   color: #6d6b6c;
 }
 
-.getlocation-btn {
-  cursor: pointer;
-  font-size: 24px;
-  position: absolute;
-  right: 17.5%;
-  transform: translate(0, -25%);
+.container button {
+  margin: 6px 0 48px 0;
 }
 
-.location-form {
-  background-color: #efefef;
+.register-switch {
+  margin-top: 12px;
+  padding: 24px;
+  width: 100%;
 }
 
-.location-form > .input-container > input {
-  margin: 16px;
+.applinks {
+  margin-top: 16px;
+  gap: 16px;
 }
 
-.login-btn,
-.register-btn {
-  cursor: pointer;
+.apps {
+  gap: 8px;
 }
-
-.login-btn:hover,
-.register-btn:hover {
-  background-color: #980511;
+.apps img {
+  max-width: 130px;
+  height: 40px;;
+  border-radius: 8px;
 }
-
-/* .login-btn:hover,
-.register-btn:hover,
-.location-btn:hover {
-  background-color: #980511;
-}
-
-.register-link:hover,
-.login-link:hover {
-  color: #5c0206;
-  cursor: pointer;
-} */

@@ -16,27 +16,51 @@ const Authentication = () => {
                     <img src="./images/assets/welcome.jpg" alt="phone" />
                 </div>
             )}
-            <div className="container box-shadow border border-radius-s flex center column">
-                <div className="logo-form">
+            <div className="container flex center column">
+                <div className="logo-form flex column center box-shadow border border-radius-s">
                     <img src="./images/assets/ig-text-logo.png" alt="logo" onClick={() => navigate('/')} />
+                    {isLogin ? (
+                        <SignInForm
+                            switchHandler={switchHandler}
+                            handleLogin={handleLogin}
+                            error={error}
+                            setFormData={setFormData}
+                            formdata={formData}
+                        />
+                    ) : (
+                        <SignUpForm
+                            switchHandler={switchHandler}
+                            handleSignup={handleSignup}
+                            setFormData={setFormData}
+                            formData={formData}
+                            error={error}
+                        />
+                    )}
                 </div>
-                {isLogin ? (
-                    <SignInForm
-                        switchHandler={switchHandler}
-                        handleLogin={handleLogin}
-                        error={error}
-                        setFormData={setFormData}
-                        formdata={formData}
-                    />
-                ) : (
-                    <SignUpForm
-                        switchHandler={switchHandler}
-                        handleSignup={handleSignup}
-                        setFormData={setFormData}
-                        formData={formData}
-                        error={error}
-                    />
-                )}
+                <div className="register-switch white-bg box-shadow border border-radius-s size-m flex center">
+                    {isLogin ? (
+                        <p>
+                            Don't have an account?{' '}
+                            <span className="register-link primary-text" onClick={() => switchHandler(false)}>
+                                Register Now
+                            </span>
+                        </p>
+                    ) : (
+                        <p>
+                            Have an account'?{' '}
+                            <span className="register-link primary-text" onClick={() => switchHandler(true)}>
+                                Sign in
+                            </span>
+                        </p>
+                    )}
+                </div>
+                <div className="applinks flex center column size-m">
+                    <p>Get the app.</p>
+                    <div className="apps flex">
+                        <img src="./images/assets/playstore.png" alt="playstore" />
+                        <img src="./images/assets/appstore.png" alt="appstore" />
+                    </div>
+                </div>
             </div>
         </div>
     );
